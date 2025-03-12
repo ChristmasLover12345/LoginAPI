@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LoginAPI.Context
 {
-    public class DataContext
+    public class DataContext : DbContext
     {
         public DataContext(DbContextOptions options) : base(options)
         {
