@@ -156,7 +156,7 @@ namespace LoginAPI.Services
             foundUser.Hash = hashPassword.Hash;
             foundUser.Salt = hashPassword.Salt;
 
-            _dataContext.Update<UserModel>(foundUser);
+            _dataContext.Update(foundUser);
 
             result = _dataContext.SaveChanges() != 0;
             return result;

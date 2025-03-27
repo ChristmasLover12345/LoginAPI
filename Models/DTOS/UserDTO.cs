@@ -14,31 +14,3 @@ namespace LoginAPI.Models
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
