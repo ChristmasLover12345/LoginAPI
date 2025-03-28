@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 
 
-namespace TablesAPI.Services
+namespace LoginAPI.Services
 {
     public class RideTablesService
     {
