@@ -23,9 +23,18 @@ namespace LoginAPI.Controllers
 
         [HttpPost]
         [Route("CreateUser")]
-        public bool CreateUser([FromBody]UserDTO newUser)
+        public IActionResult CreateUser([FromBody]UserDTO newUser)
         {
-            return _userService.CreateUser(newUser);
+             bool result = _userService.CreateUser(newUser);
+    
+            if (result)
+            {
+                return Ok(new { success = true });
+            }
+            else
+            {
+                return BadRequest(new { success = false, message = "Email already in use." });
+            }
         }
 
         [HttpPost]
