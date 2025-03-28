@@ -29,11 +29,11 @@ namespace LoginAPI.Controllers
     
             if (result)
             {
-                return Ok(new { success = true });
+                return Ok(new { Success = true });
             }
             else
             {
-                return BadRequest(new { success = false, message = "Email already in use." });
+                return BadRequest(new { Success = false, message = "Email already in use." });
             }
         }
 
@@ -60,12 +60,25 @@ namespace LoginAPI.Controllers
         {
             return "You ARE supposed to be here!";
         }
+        
 
         [HttpPut]
         [Route("UpdatePassword")]
-        public bool UpdatePassword([FromBody] UserDTO user)
+        public IActionResult UpdatePassword([FromBody] UserDTO user)
         {
-            return _userService.UpdatePassword(user);
+
+
+            bool success = _userService.UpdatePassword(user);
+
+            if(success)
+            {
+                return Ok(new { Success = true });
+            }
+            else
+            {
+                return BadRequest(new {Message = "Email not found"});
+            }
+            
         }
 
     }
