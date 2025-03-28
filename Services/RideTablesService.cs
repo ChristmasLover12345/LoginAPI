@@ -29,6 +29,19 @@ namespace LoginAPI.Services
             return await _dataContext.SaveChangesAsync() != 0;
         }
 
+        public async Task<bool> RemoveGalleryPost(int id)
+        {
+            var post = await _dataContext.GalleryPosts.FirstOrDefaultAsync(post => post.Id == id);
+
+            if(post == null) return false;
+
+            post.IsDeleted = true;
+
+            _dataContext.GalleryPosts.Update(post);
+             return await _dataContext.SaveChangesAsync() != 0;
+
+        }
+
         public async Task<bool> AddRoute(RoutesModel route)
         {
             await _dataContext.Routes.AddAsync(route);

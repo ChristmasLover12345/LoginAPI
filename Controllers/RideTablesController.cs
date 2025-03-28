@@ -71,6 +71,17 @@ namespace LoginAPI.Controllers
 
         }
 
+        [HttpDelete("RemoveGalleryPost/{id}")]
+        public async Task<IActionResult> RemoveGalleryPost(int id)
+        {
+            var success = await _rideTablesService.RemoveGalleryPost(id);
+
+            if(success) return Ok(new {Success = true});
+
+            return BadRequest(new {Message = "no post to be removed was found"});
+
+        }
+
         [HttpGet("GetRoutes")]
         public async Task<IActionResult> GetAllRoutes()
         {
