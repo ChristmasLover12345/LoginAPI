@@ -155,5 +155,34 @@ namespace LoginAPI.Services
         public async Task<List<GalleryPostModel>> GetUserPosts(int userId) => await _dataContext.GalleryPosts.Where(post => post.CreatorId == userId).ToListAsync();
         public async Task<List<RoutesModel>> GetUserRoutes(int userId) => await _dataContext.Routes.Where(route => route.CreatorId == userId).ToListAsync();
 
+        public async Task<bool> AddUserProfile(UserProfileModel profile)
+        {
+            await _dataContext.UserProfile.AddAsync(profile);
+            return await _dataContext.SaveChangesAsync() != 0;
+        }
+
+         public async Task<bool> EditUserProfile(UserProfileModel profile)
+        {
+            var profileToEdit = await GetProfileById(profile.Id);
+            
+
+            if(profileToEdit == null) return false;
+
+            profileToEdit.BikeType = profile.BikeType;
+            profileToEdit.Id = profile.Id;
+            profileToEdit.Location = profile.Location;
+            profileToEdit.Name = profile.Name;
+            profileToEdit.ProfilePicture = profile.ProfilePicture;
+            profileToEdit.RideConsistency = profile.RideConsistency;
+            profileToEdit.RidingExperience = profile.RidingExperience;
+            profileToEdit.RidingPreference = profile.RidingPreference;
+            profileToEdit.UserName = profile.UserName;
+
+            _dataContext.UserProfile.Update(profileToEdit);
+            return await _dataContext.SaveChangesAsync() != 0;
+        }
+
+        public async Task<UserProfileModel> GetProfileById(int profileId) => await _dataContext.UserProfile.FirstOrDefaultAsync(profile => profile.Id == profileId);
+
     }
 }

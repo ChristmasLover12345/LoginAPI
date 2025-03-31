@@ -106,7 +106,7 @@ namespace LoginAPI.Controllers
 
         }
 
-         [HttpPost("AddRoute")]
+        [HttpPost("AddRoute")]
         public async Task<IActionResult> AddRoute([FromBody] RoutesModel route)
         {
             var success = await _rideTablesService.AddRoute(route); 
@@ -147,7 +147,7 @@ namespace LoginAPI.Controllers
             return BadRequest(new {Message = "No likes"});
         }
 
-         [HttpGet("GetComments/{id}")]
+        [HttpGet("GetComments/{id}")]
         public async Task<IActionResult> GetComments(int id)
         {
             var Comments = await _rideTablesService.GetComments(id);
@@ -192,7 +192,7 @@ namespace LoginAPI.Controllers
 
         }
 
-          [HttpDelete("RemoveComment/{commentId}/{userId}")]
+        [HttpDelete("RemoveComment/{commentId}/{userId}")]
         public async Task<IActionResult> RemoveComment(int commentId, int userId)
         {
             var success = await _rideTablesService.RemoveComment(commentId, userId);
@@ -203,6 +203,36 @@ namespace LoginAPI.Controllers
 
         }
 
+        
+        [HttpPost("AddUserProfile")]
+        public async Task<IActionResult> AddUserProfile([FromBody] UserProfileModel profile)
+        {
+            var success = await _rideTablesService.AddUserProfile(profile); 
+
+            if(success) return Ok(new {Success = true});
+
+            return BadRequest(new {Message = "Profile creation was not successful"});
+        }
+
+        [HttpPost("EditProfile")]
+        public async Task<IActionResult> EditUserProfile([FromBody] UserProfileModel profile)
+        {
+            var success = await _rideTablesService.EditUserProfile(profile);
+
+            if(success) return Ok(new {Success = true});
+
+            return BadRequest(new {Message = "No profile found"});
+        }
+
+        [HttpGet("GetProfile/{id}")]
+        public async Task<IActionResult> GetProfile(int id)
+        {
+            var profile = await _rideTablesService.GetProfileById(id);
+
+            if(profile != null) return Ok(profile);
+
+            return BadRequest(new {Message = "No profile found"});
+        }
 
 
     }
