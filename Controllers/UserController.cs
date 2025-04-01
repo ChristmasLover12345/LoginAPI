@@ -76,7 +76,7 @@ namespace LoginAPI.Controllers
             }
             else
             {
-                return BadRequest(new {Message = "Email not found"});
+                return BadRequest(new {Message = "Email not found / Wrong answer"});
             }
             
         }
