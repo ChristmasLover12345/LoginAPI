@@ -31,10 +31,14 @@ namespace LoginAPI.Services
             {
                 UserModel usetToAdd = new();
                 usetToAdd.Email = newUser.Email;
+                usetToAdd.Question = newUser.Question;
 
                 PasswordDTO hashPasword = HashPassword(newUser.Password);
                 usetToAdd.Hash = hashPasword.Hash;
                 usetToAdd.Salt = hashPasword.Salt;
+                PasswordDTO hashAnswer = HashPassword(newUser.Answer);
+                usetToAdd.answerHash = hashAnswer.Hash;
+                usetToAdd.answerSalt = hashAnswer.Salt;
 
                 _dataContext.Users.Add(usetToAdd);
                 result = _dataContext.SaveChanges() !=0;
@@ -140,7 +144,7 @@ namespace LoginAPI.Services
 
         }
 
-          public bool UpdatePassword(UserDTO user)
+          public bool UpdatePassword(UserDTO user,string guess)
         {
             bool result = false;
 
@@ -151,15 +155,20 @@ namespace LoginAPI.Services
                 return result;
             }
 
-            PasswordDTO hashPassword = HashPassword(user.Password);
+            if(VerifyPassword(guess, foundUser.answerSalt, foundUser.answerHash))
+            {
 
+            PasswordDTO hashPassword = HashPassword(user.Password);
             foundUser.Hash = hashPassword.Hash;
             foundUser.Salt = hashPassword.Salt;
 
-            _dataContext.Update(foundUser);
-
+             _dataContext.Update(foundUser);
             result = _dataContext.SaveChanges() != 0;
             return result;
+            
+            }
+
+           return result;
 
         }
 

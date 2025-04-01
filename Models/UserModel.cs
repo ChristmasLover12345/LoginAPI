@@ -11,5 +11,11 @@ namespace LoginAPI.Models
         public string? Email { get; set; }
         public string? Salt { get; set; }
         public string? Hash { get; set; }
+        public string? Question {get; set;}
+        public string? answerSalt {get; set;}
+        public string? answerHash {get; set;}
+
+
+        
     }
 }
