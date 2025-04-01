@@ -5,7 +5,7 @@
 namespace LoginAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class newmodel : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -67,6 +67,24 @@ namespace LoginAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserProfile", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Salt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Hash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Question = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    answerSalt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    answerHash = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,6 +213,9 @@ namespace LoginAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserProfile");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Comments");

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoginAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250328205835_newmodel")]
-    partial class newmodel
+    [Migration("20250401183951_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -215,7 +215,16 @@ namespace LoginAPI.Migrations
                     b.Property<string>("Hash")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Question")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Salt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("answerHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("answerSalt")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

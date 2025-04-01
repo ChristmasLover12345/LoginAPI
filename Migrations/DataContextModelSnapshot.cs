@@ -212,7 +212,16 @@ namespace LoginAPI.Migrations
                     b.Property<string>("Hash")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Question")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Salt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("answerHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("answerSalt")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
