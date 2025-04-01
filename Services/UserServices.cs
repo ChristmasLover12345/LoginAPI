@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LoginAPI.Context;
 using LoginAPI.Models;
+using LoginAPI.Models.DTOS;
 using Microsoft.IdentityModel.Tokens;
 
 namespace LoginAPI.Services
@@ -71,7 +72,7 @@ namespace LoginAPI.Services
 
         }
 
-        public string Login(UserDTO user)         
+        public string Login(LoginDTO user)         
         {
             string result = null;
 

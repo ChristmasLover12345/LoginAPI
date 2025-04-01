@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LoginAPI.Models;
+using LoginAPI.Models.DTOS;
 using LoginAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +40,7 @@ namespace LoginAPI.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public IActionResult Login([FromBody] UserDTO user)
+        public IActionResult Login([FromBody] LoginDTO user)
         {
             string stringToken = _userService.Login(user);
 
