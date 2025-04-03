@@ -151,11 +151,11 @@ namespace LoginAPI.Services
 
             var foundUser = GetUserByEmail(user.Email);
 
-            if(foundUser == null)
+            if(foundUser == null || foundUser.Question == user.Question)
             {
                 return result;
             }
-
+            
             if(VerifyPassword(securityAnswer, foundUser.answerSalt, foundUser.answerHash))
             {
 
