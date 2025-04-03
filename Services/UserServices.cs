@@ -145,7 +145,7 @@ namespace LoginAPI.Services
 
         }
 
-          public bool UpdatePassword(UserDTO user,string guess)
+          public bool UpdatePassword(UserDTO user,string securityAnswer)
         {
             bool result = false;
 
@@ -156,7 +156,7 @@ namespace LoginAPI.Services
                 return result;
             }
 
-            if(VerifyPassword(guess, foundUser.answerSalt, foundUser.answerHash))
+            if(VerifyPassword(securityAnswer, foundUser.answerSalt, foundUser.answerHash))
             {
 
             PasswordDTO hashPassword = HashPassword(user.Password);
