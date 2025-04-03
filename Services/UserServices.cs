@@ -145,18 +145,18 @@ namespace LoginAPI.Services
 
         }
 
-          public bool UpdatePassword(UserDTO user,string securityAnswer)
+          public bool UpdatePassword(UserDTO user)
         {
             bool result = false;
 
             var foundUser = GetUserByEmail(user.Email);
 
-            if(foundUser == null || foundUser.Question == user.Question)
+            if(foundUser == null || foundUser.Question != user.Question)
             {
                 return result;
             }
             
-            if(VerifyPassword(securityAnswer, foundUser.answerSalt, foundUser.answerHash))
+            if(VerifyPassword(user.Answer, foundUser.answerSalt, foundUser.answerHash))
             {
 
             PasswordDTO hashPassword = HashPassword(user.Password);

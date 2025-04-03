@@ -65,11 +65,11 @@ namespace LoginAPI.Controllers
 
         [HttpPut]
         [Route("UpdatePassword")]
-        public IActionResult UpdatePassword([FromBody] UserDTO user, string securityAnswer)
+        public IActionResult UpdatePassword([FromBody] UserDTO user)
         {
 
-
-            bool success = _userService.UpdatePassword(user, securityAnswer);
+            
+            bool success = _userService.UpdatePassword(user);
 
             if(success)
             {
