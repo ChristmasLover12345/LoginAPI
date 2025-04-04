@@ -24,9 +24,9 @@ namespace LoginAPI.Services
         }
 
 
-        public string CreateUser(UserDTO newUser)
+        public List<string> CreateUser(UserDTO newUser)
         {
-            string result = null;
+            List<string> result = null;
             bool itWorked = false;
 
             if (!DoesUserExist(newUser.Email))
@@ -75,7 +75,10 @@ namespace LoginAPI.Services
                 // Generate our JWT and save the token as a string into a variable
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
-                result = tokenString;
+                UserModel user = GetUserByEmail(usetToAdd.Email);
+
+                result.Add(tokenString);
+                result.Add(user.Id.ToString());
                 }
             }
 

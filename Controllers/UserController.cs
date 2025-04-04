@@ -26,11 +26,11 @@ namespace LoginAPI.Controllers
         [Route("CreateUser")]
         public IActionResult CreateUser([FromBody]UserDTO newUser)
         {
-             string result = _userService.CreateUser(newUser);
+            List<string> result = _userService.CreateUser(newUser);
     
             if (result != null)
             {
-                return Ok(new { Token = result, Success = true });
+                return Ok(new { result});
             }
             else
             {
