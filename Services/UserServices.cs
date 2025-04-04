@@ -24,9 +24,9 @@ namespace LoginAPI.Services
         }
 
 
-        public List<string> CreateUser(UserDTO newUser)
+        public UserCreateDTO CreateUser(UserDTO newUser)
         {
-            List<string> result = null;
+            UserCreateDTO result = new UserCreateDTO(); 
             bool itWorked = false;
 
             if (!DoesUserExist(newUser.Email))
@@ -77,8 +77,8 @@ namespace LoginAPI.Services
 
                 UserModel user = GetUserByEmail(usetToAdd.Email);
 
-                result.Add(tokenString);
-                result.Add(user.Id.ToString());
+                result.Token = tokenString;
+                result.Id = user.Id; 
                 }
             }
 
