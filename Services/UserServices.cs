@@ -24,9 +24,10 @@ namespace LoginAPI.Services
         }
 
 
-         public bool CreateUser(UserDTO newUser)
+        public string CreateUser(UserDTO newUser)
         {
-            bool result = false;
+            string result = null;
+            bool itWorked = false;
 
             if (!DoesUserExist(newUser.Email))
             {
@@ -42,7 +43,40 @@ namespace LoginAPI.Services
                 usetToAdd.answerSalt = hashAnswer.Salt;
 
                 _dataContext.Users.Add(usetToAdd);
-                result = _dataContext.SaveChanges() !=0;
+                itWorked = _dataContext.SaveChanges() !=0;
+
+                if(itWorked)
+                {
+                    // JWT: JSON web token = a type of token used for authentication or transfering information
+                // Bearer Token: A token that grants access to a resource, such as an API. JWT can be used as a bearer token, but there are other types of tokens that can be used as a bearer token.
+
+                // Setting the string that will be encrypted int our JWT
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+                
+                // Now to encrypt our secret key
+                var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+                // Set the options for our token to define properties such as where the token is issued from, where it is allowed to be used, and how long it is valid for
+                var tokenOptions = new JwtSecurityToken(
+                    // Issuer: where is this token allowed to be generated from
+                    issuer: "rideapi-egexbda9bpfgh6c9.westus-01.azurewebsites.net",
+                    // audience: where this token is allowed to authenticate.
+                    // issuer and audience should be the same since our api os handling both login and authentication
+                    audience: "rideapi-egexbda9bpfgh6c9.westus-01.azurewebsites.net",
+                    // Claims = additional options for authentication
+                    claims: new List<Claim>(),
+                    // Sets the token expiration date. in other words, this is what makes our tokens temporary, thus keeping our access to our rescources safe and secure
+                    expires: DateTime.Now.AddMinutes(1440),
+                    // This attaches our newly encrypted super secret key that was turned into sign on credentials.
+                    signingCredentials: signingCredentials
+                    
+                );
+
+                // Generate our JWT and save the token as a string into a variable
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+
+                result = tokenString;
+                }
             }
 
             return result;
@@ -126,7 +160,7 @@ namespace LoginAPI.Services
 
         }
 
-        private UserModel GetUserByEmail(string email)
+        public UserModel GetUserByEmail(string email)
         {
             return _dataContext.Users.SingleOrDefault(users => users.Email == email);
         }

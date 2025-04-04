@@ -26,15 +26,30 @@ namespace LoginAPI.Controllers
         [Route("CreateUser")]
         public IActionResult CreateUser([FromBody]UserDTO newUser)
         {
-             bool result = _userService.CreateUser(newUser);
+             string result = _userService.CreateUser(newUser);
     
-            if (result)
+            if (result != null)
             {
-                return Ok(new { Success = true });
+                return Ok(new { Token = result, Success = true });
             }
             else
             {
                 return BadRequest(new { Success = false, message = "Email already in use." });
+            }
+        }
+
+        [HttpGet("GetUserByEmail/{email}")]
+        public IActionResult GetUserByEmail(string email)
+        {
+            var user = _userService.GetUserByEmail(email);
+
+            if (user != null)
+            {
+                return Ok(new {user});
+            }
+            else
+            {
+                return Unauthorized(new {Message = "No user found linked to this email"});
             }
         }
 
