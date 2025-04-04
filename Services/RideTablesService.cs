@@ -156,7 +156,7 @@ namespace LoginAPI.Services
         public async Task<List<RoutesModel>> GetUserRoutes(int userId) => await _dataContext.Routes.Where(route => route.CreatorId == userId).ToListAsync();
 
         public async Task<bool> AddUserProfile(UserProfileModel profile)
-        {
+        { 
             await _dataContext.UserProfile.AddAsync(profile);
             return await _dataContext.SaveChangesAsync() != 0;
         }
