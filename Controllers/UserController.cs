@@ -57,11 +57,11 @@ namespace LoginAPI.Controllers
         [Route("Login")]
         public IActionResult Login([FromBody] LoginDTO user)
         {
-            string stringToken = _userService.Login(user);
+            UserCreateDTO result = _userService.Login(user);
 
-            if (stringToken != null)
+            if (result != null)
             {
-                return Ok(new { Token = stringToken });
+                return Ok(new {result });
             }
             else
             {

@@ -47,7 +47,7 @@ namespace LoginAPI.Services
 
                 if(itWorked)
                 {
-                    // JWT: JSON web token = a type of token used for authentication or transfering information
+                // JWT: JSON web token = a type of token used for authentication or transfering information
                 // Bearer Token: A token that grants access to a resource, such as an API. JWT can be used as a bearer token, but there are other types of tokens that can be used as a bearer token.
 
                 // Setting the string that will be encrypted int our JWT
@@ -109,9 +109,10 @@ namespace LoginAPI.Services
 
         }
 
-        public string Login(LoginDTO user)         
+        public UserCreateDTO Login(LoginDTO user)         
         {
-            string result = null;
+            UserCreateDTO result = null;
+           
 
             UserModel foundUser = GetUserByEmail(user.Email);
 
@@ -150,7 +151,10 @@ namespace LoginAPI.Services
                 // Generate our JWT and save the token as a string into a variable
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
-                result = tokenString;
+                UserModel guy = GetUserByEmail(user.Email);
+
+                result.Token = tokenString;
+                result.Id = guy.Id;
                 // Token Anatomy:
                 // wnuifwnuiwfenuiwfenuiwfe.nusfenuioeoionve.wqundsandoawnd
                 // Header: wnuifwnuiwfenuiwfenuiwfe
