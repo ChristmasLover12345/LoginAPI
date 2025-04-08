@@ -154,10 +154,18 @@ namespace LoginAPI.Services
 
         public async Task<List<GalleryPostModel>> GetUserPosts(int userId) => await _dataContext.GalleryPosts.Where(post => post.CreatorId == userId).ToListAsync();
         public async Task<List<RoutesModel>> GetUserRoutes(int userId) => await _dataContext.Routes.Where(route => route.CreatorId == userId).ToListAsync();
+        private async Task<UserProfileModel> GetUserByUserName(string userName) => await _dataContext.UserProfile.FirstOrDefaultAsync(user => user.UserName == userName);
 
         public async Task<bool> AddUserProfile(UserProfileModel profile)
         { 
+
+            var user = await GetUserByUserName(profile.UserName);
+
+            if(user.UserName == profile.UserName) return false;
+
+
             await _dataContext.UserProfile.AddAsync(profile);
+
             return await _dataContext.SaveChangesAsync() != 0;
         }
 
