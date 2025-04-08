@@ -12,7 +12,7 @@ namespace LoginAPI.Services
 {
     public class RideTablesService
     {
-        
+
         private readonly DataContext _dataContext;
         public RideTablesService(DataContext dataContext)
         {
@@ -33,19 +33,19 @@ namespace LoginAPI.Services
         {
             var post = await _dataContext.GalleryPosts.FirstOrDefaultAsync(post => post.Id == id);
 
-            if(post == null) return false;
+            if (post == null) return false;
 
             post.IsDeleted = true;
 
             _dataContext.GalleryPosts.Update(post);
-             return await _dataContext.SaveChangesAsync() != 0;
+            return await _dataContext.SaveChangesAsync() != 0;
 
         }
 
         public async Task<bool> AddRoute(RoutesModel route)
         {
             await _dataContext.Routes.AddAsync(route);
-            return await _dataContext.SaveChangesAsync() !=0;
+            return await _dataContext.SaveChangesAsync() != 0;
         }
 
         public async Task<bool> PrivateRoute(int id)
@@ -53,12 +53,12 @@ namespace LoginAPI.Services
             var route = await _dataContext.Routes.FirstOrDefaultAsync(route => route.Id == id);
 
 
-            if(route == null)
+            if (route == null)
             {
                 return false;
             }
 
-            if(route.IsPrivate == true)
+            if (route.IsPrivate == true)
             {
                 route.IsPrivate = false;
             }
@@ -76,12 +76,12 @@ namespace LoginAPI.Services
         {
             var route = await _dataContext.Routes.FirstOrDefaultAsync(route => route.Id == id);
 
-            if(route == null) return false;
+            if (route == null) return false;
 
             route.IsDeleted = true;
 
             _dataContext.Routes.Update(route);
-             return await _dataContext.SaveChangesAsync() != 0;
+            return await _dataContext.SaveChangesAsync() != 0;
 
         }
 
@@ -94,15 +94,15 @@ namespace LoginAPI.Services
         public async Task<bool> AddComment(CommentsModel comment)
         {
             await _dataContext.Comments.AddAsync(comment);
-            return await _dataContext.SaveChangesAsync() !=0;
+            return await _dataContext.SaveChangesAsync() != 0;
         }
-        
+
         public async Task<bool> EditGalleryPost(GalleryPostModel post)
         {
             var postToEdit = await GetGalleryPostById(post.Id);
-            
 
-            if(postToEdit == null) return false;
+
+            if (postToEdit == null) return false;
 
             postToEdit.Title = post.Title;
             postToEdit.ImageUrl = post.ImageUrl;
@@ -128,7 +128,7 @@ namespace LoginAPI.Services
 
             if (like == null)
             {
-                return false; 
+                return false;
             }
 
             like.IsDeleted = true;
@@ -157,24 +157,39 @@ namespace LoginAPI.Services
         private async Task<UserProfileModel> GetUserByUserName(string userName) => await _dataContext.UserProfile.FirstOrDefaultAsync(user => user.UserName == userName);
 
         public async Task<bool> AddUserProfile(UserProfileModel profile)
-        { 
+        {
 
             var user = await GetUserByUserName(profile.UserName);
 
-            if(user.UserName == profile.UserName) return false;
 
+            if (user != null && user.UserName == profile.UserName)
+            {
+                return false;
+            }else{
 
-            await _dataContext.UserProfile.AddAsync(profile);
+            UserProfileModel newProfile = new();
+            newProfile.UserName = profile.UserName;
+            newProfile.Name = profile.Name;
+            newProfile.Location = profile.Location;
+            newProfile.BikeType = profile.BikeType;
+            newProfile.RidingExperience = profile.RidingExperience;
+            newProfile.RidingPreference = profile.RidingPreference;
+            newProfile.RideConsistency = profile.RideConsistency;
+            newProfile.ProfilePicture = profile.ProfilePicture;
+
+            await _dataContext.UserProfile.AddAsync(newProfile);
 
             return await _dataContext.SaveChangesAsync() != 0;
+            }
+
         }
 
-         public async Task<bool> EditUserProfile(UserProfileModel profile)
+        public async Task<bool> EditUserProfile(UserProfileModel profile)
         {
             var profileToEdit = await GetProfileById(profile.Id);
-            
 
-            if(profileToEdit == null) return false;
+
+            if (profileToEdit == null) return false;
 
             profileToEdit.BikeType = profile.BikeType;
             profileToEdit.Id = profile.Id;
