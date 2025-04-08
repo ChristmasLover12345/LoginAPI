@@ -162,9 +162,10 @@ namespace LoginAPI.Services
             var user = await GetUserByUserName(profile.UserName);
 
 
-            if (user != null && user.UserName == profile.UserName)
+            if (user.UserName == profile.UserName)
             {
                 return false;
+
             }else{
 
             UserProfileModel newProfile = new();
@@ -176,9 +177,9 @@ namespace LoginAPI.Services
             newProfile.RidingPreference = profile.RidingPreference;
             newProfile.RideConsistency = profile.RideConsistency;
             newProfile.ProfilePicture = profile.ProfilePicture;
+            newProfile.userId = profile.userId;
 
             await _dataContext.UserProfile.AddAsync(newProfile);
-
             return await _dataContext.SaveChangesAsync() != 0;
             }
 

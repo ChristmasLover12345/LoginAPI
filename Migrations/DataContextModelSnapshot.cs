@@ -261,6 +261,9 @@ namespace LoginAPI.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("UserProfile");
