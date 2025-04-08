@@ -172,7 +172,7 @@ namespace LoginAPI.Services
 
                 UserProfileModel newProfile = new();
                 newProfile.UserName = profile.UserName;
-                newProfile.UserNumber = profile.UserNumber;
+                newProfile.UserId = profile.UserId;
                 newProfile.Name = profile.Name;
                 newProfile.Location = profile.Location;
                 newProfile.BikeType = profile.BikeType;
