@@ -199,7 +199,7 @@ namespace LoginAPI.Services
             profileToEdit.RideConsistency = profile.RideConsistency;
             profileToEdit.RidingExperience = profile.RidingExperience;
             profileToEdit.RidingPreference = profile.RidingPreference;
-            profileToEdit.UserName = profile.UserName;
+            
 
             _dataContext.UserProfile.Update(profileToEdit);
             return await _dataContext.SaveChangesAsync() != 0;
