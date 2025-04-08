@@ -160,9 +160,11 @@ namespace LoginAPI.Services
         {
 
             var user = await GetUserByUserName(profile.UserName);
+             
+            UserProfileModel newProfile = new();
 
 
-            if (user.UserName == profile.UserName)
+            if (user != null)
             {
                 return false;
 
@@ -170,9 +172,8 @@ namespace LoginAPI.Services
             else
             {
 
-                UserProfileModel newProfile = new();
                 newProfile.UserName = profile.UserName;
-                newProfile.UserNumber = profile.UserNumber;
+                newProfile.UserId = profile.UserId;
                 newProfile.Name = profile.Name;
                 newProfile.Location = profile.Location;
                 newProfile.BikeType = profile.BikeType;
