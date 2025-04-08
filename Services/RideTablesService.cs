@@ -166,21 +166,23 @@ namespace LoginAPI.Services
             {
                 return false;
 
-            }else{
+            }
+            else
+            {
 
-            UserProfileModel newProfile = new();
-            newProfile.UserName = profile.UserName;
-            newProfile.Name = profile.Name;
-            newProfile.Location = profile.Location;
-            newProfile.BikeType = profile.BikeType;
-            newProfile.RidingExperience = profile.RidingExperience;
-            newProfile.RidingPreference = profile.RidingPreference;
-            newProfile.RideConsistency = profile.RideConsistency;
-            newProfile.ProfilePicture = profile.ProfilePicture;
-            newProfile.userId = profile.userId;
+                UserProfileModel newProfile = new();
+                newProfile.UserName = profile.UserName;
+                newProfile.UserNumber = profile.UserNumber;
+                newProfile.Name = profile.Name;
+                newProfile.Location = profile.Location;
+                newProfile.BikeType = profile.BikeType;
+                newProfile.RidingExperience = profile.RidingExperience;
+                newProfile.RidingPreference = profile.RidingPreference;
+                newProfile.RideConsistency = profile.RideConsistency;
+                newProfile.ProfilePicture = profile.ProfilePicture;
 
-            await _dataContext.UserProfile.AddAsync(newProfile);
-            return await _dataContext.SaveChangesAsync() != 0;
+                await _dataContext.UserProfile.AddAsync(newProfile);
+                return await _dataContext.SaveChangesAsync() != 0;
             }
 
         }
@@ -200,7 +202,7 @@ namespace LoginAPI.Services
             profileToEdit.RideConsistency = profile.RideConsistency;
             profileToEdit.RidingExperience = profile.RidingExperience;
             profileToEdit.RidingPreference = profile.RidingPreference;
-            
+
 
             _dataContext.UserProfile.Update(profileToEdit);
             return await _dataContext.SaveChangesAsync() != 0;
