@@ -111,7 +111,7 @@ namespace LoginAPI.Services
 
         public UserCreateDTO Login(LoginDTO user)         
         {
-            UserCreateDTO result = null;
+            UserCreateDTO result = new();
            
 
             UserModel foundUser = GetUserByEmail(user.Email);
@@ -151,10 +151,10 @@ namespace LoginAPI.Services
                 // Generate our JWT and save the token as a string into a variable
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
-                UserModel guy = GetUserByEmail(user.Email);
+                // UserModel guy = GetUserByEmail(user.Email);
 
                 result.Token = tokenString;
-                result.Id = guy.Id;
+                result.Id = foundUser.Id;
                 // Token Anatomy:
                 // wnuifwnuiwfenuiwfenuiwfe.nusfenuioeoionve.wqundsandoawnd
                 // Header: wnuifwnuiwfenuiwfenuiwfe

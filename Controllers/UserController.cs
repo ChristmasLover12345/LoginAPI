@@ -69,9 +69,9 @@ namespace LoginAPI.Controllers
             }
         }
 
-        [Authorize]
         [HttpGet]
         [Route("AuthenticUser")]
+        [Authorize]
         public string AuthenticUserCheck()
         {
             return "You ARE supposed to be here!";
