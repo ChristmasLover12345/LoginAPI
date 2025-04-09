@@ -173,7 +173,7 @@ namespace LoginAPI.Services
             {
 
                 newProfile.UserName = profile.UserName;
-                newProfile.userId = profile.userId;
+                newProfile.UserId = profile.UserId;
                 newProfile.Name = profile.Name;
                 newProfile.Location = profile.Location;
                 newProfile.BikeType = profile.BikeType;
