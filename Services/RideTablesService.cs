@@ -209,7 +209,7 @@ namespace LoginAPI.Services
             return await _dataContext.SaveChangesAsync() != 0;
         }
 
-        public async Task<UserProfileModel> GetProfileById(int profileId) => await _dataContext.UserProfile.FirstOrDefaultAsync(profile => profile.Id == profileId);
+        public async Task<UserProfileModel> GetProfileById(int profileId) => await _dataContext.UserProfile.FirstOrDefaultAsync(profile => profile.UserId == profileId);
 
     }
 }
