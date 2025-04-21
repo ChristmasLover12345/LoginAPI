@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoginAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250408202658_Init")]
+    [Migration("20250421225651_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -63,7 +63,7 @@ namespace LoginAPI.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("LoginAPI.Models.CoordinatesModel+Coordinates", b =>
+            modelBuilder.Entity("LoginAPI.Models.CoordinatesModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,7 +87,7 @@ namespace LoginAPI.Migrations
 
                     b.HasIndex("RoutesModelId");
 
-                    b.ToTable("Coordinates");
+                    b.ToTable("CoordinatesModel");
                 });
 
             modelBuilder.Entity("LoginAPI.Models.GalleryPostModel", b =>
@@ -169,14 +169,14 @@ namespace LoginAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CityName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("CreatorId")
                         .HasColumnType("int");
 
-                    b.Property<string>("DateCreated")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EndLocation")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -188,12 +188,6 @@ namespace LoginAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RouteName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StartLocation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedAt")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -261,11 +255,11 @@ namespace LoginAPI.Migrations
                     b.Property<string>("RidingPreference")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("userId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -283,10 +277,10 @@ namespace LoginAPI.Migrations
                         .HasForeignKey("RoutesModelId");
                 });
 
-            modelBuilder.Entity("LoginAPI.Models.CoordinatesModel+Coordinates", b =>
+            modelBuilder.Entity("LoginAPI.Models.CoordinatesModel", b =>
                 {
                     b.HasOne("LoginAPI.Models.RoutesModel", null)
-                        .WithMany("RouteData")
+                        .WithMany("PathCoordinates")
                         .HasForeignKey("RoutesModelId");
                 });
 
@@ -323,7 +317,7 @@ namespace LoginAPI.Migrations
 
                     b.Navigation("Likes");
 
-                    b.Navigation("RouteData");
+                    b.Navigation("PathCoordinates");
                 });
 #pragma warning restore 612, 618
         }

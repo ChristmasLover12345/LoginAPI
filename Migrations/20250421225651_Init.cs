@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -37,10 +38,8 @@ namespace LoginAPI.Migrations
                     CreatorId = table.Column<int>(type: "int", nullable: false),
                     RouteName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RouteDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StartLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EndLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateCreated = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedAt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CityName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsPrivate = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -55,7 +54,7 @@ namespace LoginAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    userId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -118,7 +117,7 @@ namespace LoginAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Coordinates",
+                name: "CoordinatesModel",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -130,9 +129,9 @@ namespace LoginAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Coordinates", x => x.Id);
+                    table.PrimaryKey("PK_CoordinatesModel", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Coordinates_Routes_RoutesModelId",
+                        name: "FK_CoordinatesModel_Routes_RoutesModelId",
                         column: x => x.RoutesModelId,
                         principalTable: "Routes",
                         principalColumn: "Id");
@@ -183,8 +182,8 @@ namespace LoginAPI.Migrations
                 column: "RoutesModelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Coordinates_RoutesModelId",
-                table: "Coordinates",
+                name: "IX_CoordinatesModel_RoutesModelId",
+                table: "CoordinatesModel",
                 column: "RoutesModelId");
 
             migrationBuilder.CreateIndex(
@@ -207,7 +206,7 @@ namespace LoginAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Coordinates");
+                name: "CoordinatesModel");
 
             migrationBuilder.DropTable(
                 name: "Likes");
