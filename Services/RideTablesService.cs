@@ -44,6 +44,7 @@ namespace LoginAPI.Services
 
         public async Task<bool> AddRoute(RoutesModel route)
         {
+            route.DateCreated = DateTime.UtcNow;
             await _dataContext.Routes.AddAsync(route);
             return await _dataContext.SaveChangesAsync() != 0;
         }
