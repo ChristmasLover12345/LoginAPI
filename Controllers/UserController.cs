@@ -59,7 +59,7 @@ namespace LoginAPI.Controllers
         {
             UserCreateDTO result = _userService.Login(user);
 
-            if (result != null)
+            if (result != null && result.Token != null)
             {
                 return Ok(new {result });
             }
