@@ -18,6 +18,7 @@ namespace LoginAPI.Models
 
         public string? RouteName { get; set; }
         public string? RouteDescription { get; set; }
+        public string? ImageUrl { get; set;}
 
         public string? CityName { get; set; }
         

@@ -38,6 +38,7 @@ namespace LoginAPI.Migrations
                     CreatorId = table.Column<int>(type: "int", nullable: false),
                     RouteName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RouteDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CityName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsPrivate = table.Column<bool>(type: "bit", nullable: false),
