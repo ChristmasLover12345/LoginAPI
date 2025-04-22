@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddScoped<UserServices>();
 builder.Services.AddScoped<RideTablesService>();
-builder.Services.AddSingleton<BlobServices>()
+builder.Services.AddSingleton<BlobServices>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

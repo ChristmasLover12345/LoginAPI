@@ -1,16 +1,16 @@
 
-using BackendBlog.Services;
+using LoginAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BackendBlog.Controllers
+namespace LoginAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
     public class BlobController : ControllerBase
     {
-        private readonly BlobService _blobService;
+        private readonly BlobServices _blobService;
 
-        public BlobController(BlobService blobService)
+        public BlobController(BlobServices blobService)
         {
             _blobService = blobService;
         }

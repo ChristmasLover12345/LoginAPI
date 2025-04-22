@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoginAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250422180731_Init")]
+    [Migration("20250422201935_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -114,6 +114,9 @@ namespace LoginAPI.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

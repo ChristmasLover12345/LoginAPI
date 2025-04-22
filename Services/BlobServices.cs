@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs;
 
 namespace LoginAPI.Services
 {
@@ -11,7 +12,7 @@ namespace LoginAPI.Services
         private readonly BlobServiceClient _blobServiceClient;
         private readonly string _containerName;
 
-        public BlobService(IConfiguration configuration)
+        public BlobServices(IConfiguration configuration)
         {
 		        //We will need 3 things
 		        //1. Our Connection String to our Blob Storage
