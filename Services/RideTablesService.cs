@@ -19,6 +19,10 @@ namespace LoginAPI.Services
             _dataContext = dataContext;
         }
 
+       
+
+
+
         public async Task<List<GalleryPostModel>> GetGalleryPosts() => await _dataContext.GalleryPosts.ToListAsync();
 
         public async Task<List<RoutesModel>> GetRoutes() => await _dataContext.Routes.ToListAsync();
