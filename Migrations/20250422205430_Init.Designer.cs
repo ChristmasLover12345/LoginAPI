@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoginAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250422201935_Init")]
+    [Migration("20250422205430_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -76,9 +76,6 @@ namespace LoginAPI.Migrations
 
                     b.Property<double>("Longitude")
                         .HasColumnType("float");
-
-                    b.Property<int>("RouteId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("RoutesModelId")
                         .HasColumnType("int");
