@@ -26,9 +26,9 @@ namespace LoginAPI.Models
         public bool IsPrivate { get; set; }
         public bool IsDeleted { get; set; }
 
-        virtual public ICollection<CoordinatesModel>? PathCoordinates { get; set;}
-        virtual public ICollection<LikesModel>? Likes { get; set; }
-        virtual public ICollection<CommentsModel>? Comments { get; set; }
+        public virtual List<CoordinatesModel>? PathCoordinates { get; set;}
+        public virtual List<LikesModel>? Likes { get; set; }
+        public virtual List<CommentsModel>? Comments { get; set; }
 
 
     }
