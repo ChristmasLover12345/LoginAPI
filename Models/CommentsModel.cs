@@ -13,6 +13,6 @@ namespace LoginAPI.Models
         public string? CommentText { get; set; }
         public string? CreatedAt { get; set; }
         public bool IsDeleted { get; set; }
-        public List<LikesModel>? Likes { get; set; }
+        virtual public List<LikesModel>? Likes { get; set; }
     }
 }
