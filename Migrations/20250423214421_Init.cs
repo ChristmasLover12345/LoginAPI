@@ -119,7 +119,7 @@ namespace LoginAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CoordinatesModel",
+                name: "Coordinates",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -131,9 +131,9 @@ namespace LoginAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CoordinatesModel", x => x.Id);
+                    table.PrimaryKey("PK_Coordinates", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CoordinatesModel_Routes_RoutesModelId",
+                        name: "FK_Coordinates_Routes_RoutesModelId",
                         column: x => x.RoutesModelId,
                         principalTable: "Routes",
                         principalColumn: "Id");
@@ -184,8 +184,8 @@ namespace LoginAPI.Migrations
                 column: "RoutesModelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CoordinatesModel_RoutesModelId",
-                table: "CoordinatesModel",
+                name: "IX_Coordinates_RoutesModelId",
+                table: "Coordinates",
                 column: "RoutesModelId");
 
             migrationBuilder.CreateIndex(
@@ -208,7 +208,7 @@ namespace LoginAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CoordinatesModel");
+                name: "Coordinates");
 
             migrationBuilder.DropTable(
                 name: "Likes");

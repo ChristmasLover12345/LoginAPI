@@ -84,7 +84,7 @@ namespace LoginAPI.Migrations
 
                     b.HasIndex("RoutesModelId");
 
-                    b.ToTable("CoordinatesModel");
+                    b.ToTable("Coordinates");
                 });
 
             modelBuilder.Entity("LoginAPI.Models.GalleryPostModel", b =>

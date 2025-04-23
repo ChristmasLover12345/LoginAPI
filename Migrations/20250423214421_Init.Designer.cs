@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoginAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250423180147_Init")]
+    [Migration("20250423214421_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -87,7 +87,7 @@ namespace LoginAPI.Migrations
 
                     b.HasIndex("RoutesModelId");
 
-                    b.ToTable("CoordinatesModel");
+                    b.ToTable("Coordinates");
                 });
 
             modelBuilder.Entity("LoginAPI.Models.GalleryPostModel", b =>

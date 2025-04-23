@@ -18,7 +18,7 @@ namespace LoginAPI.Models
         public string? Description { get; set; }
         public string? DateCreated { get; set; }
         public bool IsDeleted { get; set; }
-        virtual public List<LikesModel>? Likes { get; set; }
-        virtual public List<CommentsModel>? Comments { get; set; }
+        public virtual ICollection<LikesModel>? Likes { get; set; }
+        public virtual ICollection<CommentsModel>? Comments { get; set; }
     }
 }
