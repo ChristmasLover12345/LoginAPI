@@ -16,11 +16,23 @@ namespace LoginAPI.Context
         }
 
         public DbSet<UserModel> Users { get; set; }
-         public DbSet<UserProfileModel> UserProfile { get; set; }
+        public DbSet<UserProfileModel> UserProfile { get; set; }
         public DbSet<GalleryPostModel> GalleryPosts { get; set; }
         public DbSet<RoutesModel> Routes { get; set; }
-        public DbSet<LikesModel> Likes {get; set;}
-        public DbSet<CommentsModel> Comments { get; set;}
+        public DbSet<LikesModel> Likes { get; set; }
+        public DbSet<CommentsModel> Comments { get; set; }
+        public DbSet<CoordinatesModel> Coordinates { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<CoordinatesModel>()
+                .HasOne(c => c.Route)
+                .WithMany(r => r.PathCoordinates)
+                .HasForeignKey(c => c.RouteId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
 
     }
 }
