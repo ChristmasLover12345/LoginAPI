@@ -74,6 +74,9 @@ namespace LoginAPI.Migrations
                     b.Property<double>("Longitude")
                         .HasColumnType("float");
 
+                    b.Property<int>("RouteId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("RoutesModelId")
                         .HasColumnType("int");
 
