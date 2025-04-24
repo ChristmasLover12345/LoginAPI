@@ -34,11 +34,7 @@ namespace LoginAPI.Context
                 .HasForeignKey(c => c.RouteId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<RoutesModel>()
-            .HasOne<UserModel>()
-            .WithMany(u => u.Routes)
-            .HasForeignKey(r => r.CreatorId)
-            .OnDelete(DeleteBehavior.Cascade);
+            
         }
     }
 }

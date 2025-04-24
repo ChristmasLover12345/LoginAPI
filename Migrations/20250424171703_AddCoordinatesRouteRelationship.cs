@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LoginAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class AddRoutesUserRelationship : Migration
+    public partial class AddCoordinatesRouteRelationship : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -28,6 +28,26 @@ namespace LoginAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GalleryPosts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Routes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatorId = table.Column<int>(type: "int", nullable: false),
+                    RouteName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RouteDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CityName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsPrivate = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Routes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,49 +83,11 @@ namespace LoginAPI.Migrations
                     Hash = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Question = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     answerSalt = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    answerHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProfileId = table.Column<int>(type: "int", nullable: true)
+                    answerHash = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_UserProfile_ProfileId",
-                        column: x => x.ProfileId,
-                        principalTable: "UserProfile",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Routes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatorId = table.Column<int>(type: "int", nullable: false),
-                    RouteName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RouteDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CityName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsPrivate = table.Column<bool>(type: "bit", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreatorId1 = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Routes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Routes_Users_CreatorId",
-                        column: x => x.CreatorId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Routes_Users_CreatorId1",
-                        column: x => x.CreatorId1,
-                        principalTable: "Users",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -166,9 +148,6 @@ namespace LoginAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     PostId = table.Column<int>(type: "int", nullable: true),
-                    RouteId = table.Column<int>(type: "int", nullable: true),
-                    GalleryPostId = table.Column<int>(type: "int", nullable: true),
-                    CommentId = table.Column<int>(type: "int", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CommentsModelId = table.Column<int>(type: "int", nullable: true),
@@ -224,21 +203,6 @@ namespace LoginAPI.Migrations
                 name: "IX_Likes_RoutesModelId",
                 table: "Likes",
                 column: "RoutesModelId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Routes_CreatorId",
-                table: "Routes",
-                column: "CreatorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Routes_CreatorId1",
-                table: "Routes",
-                column: "CreatorId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_ProfileId",
-                table: "Users",
-                column: "ProfileId");
         }
 
         /// <inheritdoc />
@@ -251,6 +215,12 @@ namespace LoginAPI.Migrations
                 name: "Likes");
 
             migrationBuilder.DropTable(
+                name: "UserProfile");
+
+            migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
                 name: "Comments");
 
             migrationBuilder.DropTable(
@@ -258,12 +228,6 @@ namespace LoginAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Routes");
-
-            migrationBuilder.DropTable(
-                name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "UserProfile");
         }
     }
 }

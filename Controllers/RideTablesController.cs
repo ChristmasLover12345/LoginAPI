@@ -106,18 +106,7 @@ namespace LoginAPI.Controllers
 
         }
 
-        [HttpGet("GetAllDetailedRoutes")]
-        public async Task<IActionResult> GetAllDetailedRoutes()
-        {
-                var routes = await _rideTablesService.GetAllRoutesWithDetails();
-                if(routes == null)
-                {
-                    return BadRequest(new { Message = "No routes found" });
-                }
-                return Ok(routes);
-            
-            
-        }
+      
 
         [HttpPost("AddRoute")]
         public async Task<IActionResult> AddRoute([FromBody] RoutesModel route)

@@ -126,17 +126,11 @@ namespace LoginAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CommentId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("CommentsModelId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("GalleryPostId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("GalleryPostModelId")
                         .HasColumnType("int");
@@ -145,9 +139,6 @@ namespace LoginAPI.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RouteId")
                         .HasColumnType("int");
 
                     b.Property<int?>("RoutesModelId")
@@ -181,9 +172,6 @@ namespace LoginAPI.Migrations
                     b.Property<int>("CreatorId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CreatorId1")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -203,10 +191,6 @@ namespace LoginAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CreatorId");
-
-                    b.HasIndex("CreatorId1");
 
                     b.ToTable("Routes");
                 });
@@ -228,9 +212,6 @@ namespace LoginAPI.Migrations
                     b.Property<string>("Hash")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProfileId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Question")
                         .HasColumnType("nvarchar(max)");
 
@@ -244,8 +225,6 @@ namespace LoginAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProfileId");
 
                     b.ToTable("Users");
                 });
@@ -327,30 +306,6 @@ namespace LoginAPI.Migrations
                         .HasForeignKey("RoutesModelId");
                 });
 
-            modelBuilder.Entity("LoginAPI.Models.RoutesModel", b =>
-                {
-                    b.HasOne("LoginAPI.Models.UserModel", null)
-                        .WithMany("Routes")
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LoginAPI.Models.UserModel", "Creator")
-                        .WithMany()
-                        .HasForeignKey("CreatorId1");
-
-                    b.Navigation("Creator");
-                });
-
-            modelBuilder.Entity("LoginAPI.Models.UserModel", b =>
-                {
-                    b.HasOne("LoginAPI.Models.UserProfileModel", "Profile")
-                        .WithMany()
-                        .HasForeignKey("ProfileId");
-
-                    b.Navigation("Profile");
-                });
-
             modelBuilder.Entity("LoginAPI.Models.CommentsModel", b =>
                 {
                     b.Navigation("Likes");
@@ -370,11 +325,6 @@ namespace LoginAPI.Migrations
                     b.Navigation("Likes");
 
                     b.Navigation("PathCoordinates");
-                });
-
-            modelBuilder.Entity("LoginAPI.Models.UserModel", b =>
-                {
-                    b.Navigation("Routes");
                 });
 #pragma warning restore 612, 618
         }
