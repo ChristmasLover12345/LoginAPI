@@ -77,9 +77,12 @@ namespace LoginAPI.Migrations
                     b.Property<int>("RouteId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("RoutesModelId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("RouteId");
+                    b.HasIndex("RoutesModelId");
 
                     b.ToTable("Coordinates");
                 });
@@ -169,9 +172,6 @@ namespace LoginAPI.Migrations
                     b.Property<string>("CityName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CreatorId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -203,7 +203,10 @@ namespace LoginAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Creator")
+                    b.Property<string>("AnswerHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AnswerSalt")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -216,12 +219,6 @@ namespace LoginAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Salt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("answerHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("answerSalt")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -282,13 +279,9 @@ namespace LoginAPI.Migrations
 
             modelBuilder.Entity("LoginAPI.Models.CoordinatesModel", b =>
                 {
-                    b.HasOne("LoginAPI.Models.RoutesModel", "Route")
+                    b.HasOne("LoginAPI.Models.RoutesModel", null)
                         .WithMany("PathCoordinates")
-                        .HasForeignKey("RouteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Route");
+                        .HasForeignKey("RoutesModelId");
                 });
 
             modelBuilder.Entity("LoginAPI.Models.LikesModel", b =>

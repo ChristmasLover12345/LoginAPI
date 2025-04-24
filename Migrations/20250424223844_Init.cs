@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LoginAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class AddCoordinatesRouteRelationship : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,7 +36,6 @@ namespace LoginAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatorId = table.Column<int>(type: "int", nullable: false),
                     RouteName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RouteDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -77,13 +76,12 @@ namespace LoginAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Creator = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Salt = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Hash = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Question = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    answerSalt = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    answerHash = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    AnswerSalt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AnswerHash = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -127,17 +125,17 @@ namespace LoginAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RouteId = table.Column<int>(type: "int", nullable: false),
                     Latitude = table.Column<double>(type: "float", nullable: false),
-                    Longitude = table.Column<double>(type: "float", nullable: false)
+                    Longitude = table.Column<double>(type: "float", nullable: false),
+                    RoutesModelId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Coordinates", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Coordinates_Routes_RouteId",
-                        column: x => x.RouteId,
+                        name: "FK_Coordinates_Routes_RoutesModelId",
+                        column: x => x.RoutesModelId,
                         principalTable: "Routes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -185,9 +183,9 @@ namespace LoginAPI.Migrations
                 column: "RoutesModelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Coordinates_RouteId",
+                name: "IX_Coordinates_RoutesModelId",
                 table: "Coordinates",
-                column: "RouteId");
+                column: "RoutesModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Likes_CommentsModelId",

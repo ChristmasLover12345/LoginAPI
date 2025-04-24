@@ -23,18 +23,6 @@ namespace LoginAPI.Context
         public DbSet<CommentsModel> Comments { get; set; }
         public DbSet<CoordinatesModel> Coordinates { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-
-            modelBuilder.Entity<CoordinatesModel>()
-                .HasOne(c => c.Route)
-                .WithMany(r => r.PathCoordinates)
-                .HasForeignKey(c => c.RouteId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            
-        }
+        
     }
 }

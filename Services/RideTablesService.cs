@@ -25,7 +25,7 @@ namespace LoginAPI.Services
 
         public async Task<List<GalleryPostModel>> GetGalleryPosts() => await _dataContext.GalleryPosts.ToListAsync();
 
-        public async Task<List<RoutesModel>> GetRoutes() => await _dataContext.Routes.ToListAsync();
+        public async Task<IEnumerable<RoutesModel>> GetRoutes() => await _dataContext.Routes.Include(cord => cord.PathCoordinates).ToListAsync();
 
         public async Task<bool> AddGalleryPost(GalleryPostModel post)
         {
@@ -125,6 +125,9 @@ namespace LoginAPI.Services
 
         private async Task<GalleryPostModel> GetGalleryPostById(int Id) => await _dataContext.GalleryPosts.FindAsync(Id);
         public async Task<List<LikesModel>> GetLikes(int postId) => await _dataContext.Likes.Where(like => like.PostId == postId).ToListAsync();
+
+        
+
         public async Task<List<CommentsModel>> GetComments(int postId) => await _dataContext.Comments.Where(comment => comment.PostId == postId).ToListAsync();
 
 
@@ -160,7 +163,7 @@ namespace LoginAPI.Services
 
         public async Task<List<GalleryPostModel>> GetUserPosts(int userId) => await _dataContext.GalleryPosts.Where(post => post.CreatorId == userId).ToListAsync();
         private async Task<UserProfileModel> GetUserByUserName(string userName) => await _dataContext.UserProfile.FirstOrDefaultAsync(user => user.UserName == userName);
-        public async Task<List<RoutesModel>> GetUserRoutes(int userId) => await _dataContext.Routes.Where(route => route.CreatorId == userId).ToListAsync();
+        // public async Task<List<RoutesModel>> GetUserRoutes(int userId) => await _dataContext.Routes.Where(route => route.creator.UserId == userId).ToListAsync();
 
        
         public async Task<bool> AddUserProfile(UserProfileModel profile)

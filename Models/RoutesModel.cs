@@ -12,7 +12,8 @@ namespace LoginAPI.Models
     {
 
         public int Id { get; set; }
-        public int CreatorId { get; set; }
+
+        // public virtual UserProfileModel Creator { get; set; }
         
 
         public string? RouteName { get; set; }

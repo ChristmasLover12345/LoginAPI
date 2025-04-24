@@ -94,17 +94,17 @@ namespace LoginAPI.Controllers
 
         }
 
-        [HttpGet("GetUserRoutes/{userId}")]
-        public async Task<IActionResult> GetUserRoutes(int userId)
-        {
+        // [HttpGet("GetUserRoutes/{userId}")]
+        // public async Task<IActionResult> GetUserRoutes(int userId)
+        // {
 
-            var routes = await _rideTablesService.GetUserRoutes(userId);
+        //     var routes = await _rideTablesService.GetUserRoutes(userId);
 
-            if (routes != null) return Ok(routes);
+        //     if (routes != null) return Ok(routes);
 
-            return BadRequest(new { Message = "This user has no routes" });
+        //     return BadRequest(new { Message = "This user has no routes" });
 
-        }
+        // }
 
       
 

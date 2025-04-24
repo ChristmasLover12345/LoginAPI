@@ -39,8 +39,8 @@ namespace LoginAPI.Services
                 usetToAdd.Hash = hashPasword.Hash;
                 usetToAdd.Salt = hashPasword.Salt;
                 PasswordDTO hashAnswer = HashPassword(newUser.Answer);
-                usetToAdd.answerHash = hashAnswer.Hash;
-                usetToAdd.answerSalt = hashAnswer.Salt;
+                usetToAdd.AnswerHash = hashAnswer.Hash;
+                usetToAdd.AnswerSalt = hashAnswer.Salt;
 
                 _dataContext.Users.Add(usetToAdd);
                 itWorked = _dataContext.SaveChanges() !=0;
@@ -197,7 +197,7 @@ namespace LoginAPI.Services
                 return result;
             }
             
-            if(VerifyPassword(user.Answer, foundUser.answerSalt, foundUser.answerHash))
+            if(VerifyPassword(user.Answer, foundUser.AnswerSalt, foundUser.AnswerHash))
             {
 
             PasswordDTO hashPassword = HashPassword(user.Password);
