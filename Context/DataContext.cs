@@ -27,12 +27,18 @@ namespace LoginAPI.Context
         {
             base.OnModelCreating(modelBuilder);
 
-           
+
             modelBuilder.Entity<CoordinatesModel>()
-                .HasOne(c => c.Route)  
-                .WithMany(r => r.PathCoordinates)  
-                .HasForeignKey(c => c.RouteId)  
-                .OnDelete(DeleteBehavior.Cascade);  
+                .HasOne(c => c.Route)
+                .WithMany(r => r.PathCoordinates)
+                .HasForeignKey(c => c.RouteId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<RoutesModel>()
+            .HasOne<UserModel>()
+            .WithMany(u => u.Routes)
+            .HasForeignKey(r => r.CreatorId)
+            .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

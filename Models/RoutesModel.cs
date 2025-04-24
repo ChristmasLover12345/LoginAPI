@@ -11,10 +11,9 @@ namespace LoginAPI.Models
     public class RoutesModel
     {
 
-
         public int Id { get; set; }
         public int CreatorId { get; set; }
-
+        
 
         public string? RouteName { get; set; }
         public string? RouteDescription { get; set; }
@@ -29,6 +28,7 @@ namespace LoginAPI.Models
         public virtual List<CoordinatesModel>? PathCoordinates { get; set;}
         public virtual List<LikesModel>? Likes { get; set; }
         public virtual List<CommentsModel>? Comments { get; set; }
+        public virtual UserModel? Creator { get; set; }
 
 
     }

@@ -19,7 +19,7 @@ namespace LoginAPI.Services
             _dataContext = dataContext;
         }
 
-       
+
 
 
 
@@ -93,6 +93,7 @@ namespace LoginAPI.Services
 
         public async Task<bool> AddLike(LikesModel like)
         {
+            like.CreatedAt = DateTime.UtcNow;
             await _dataContext.Likes.AddAsync(like);
             return await _dataContext.SaveChangesAsync() != 0;
         }
@@ -158,14 +159,48 @@ namespace LoginAPI.Services
         }
 
         public async Task<List<GalleryPostModel>> GetUserPosts(int userId) => await _dataContext.GalleryPosts.Where(post => post.CreatorId == userId).ToListAsync();
-        public async Task<List<RoutesModel>> GetUserRoutes(int userId) => await _dataContext.Routes.Where(route => route.CreatorId == userId).ToListAsync();
         private async Task<UserProfileModel> GetUserByUserName(string userName) => await _dataContext.UserProfile.FirstOrDefaultAsync(user => user.UserName == userName);
+        public async Task<List<RoutesModel>> GetUserRoutes(int userId) => await _dataContext.Routes.Where(route => route.CreatorId == userId).ToListAsync();
 
+        public async Task<List<object>> GetAllRoutesWithDetails()
+        {
+            var routes = await _dataContext.Routes
+        .Include(r => r.PathCoordinates)
+        .Include(r => r.Comments)
+        .Include(r => r.Likes)
+        .Include(r => r.Creator)
+            .ThenInclude(c => c.Profile)
+        .Select(r => new
+        {
+            r.Id,
+            r.RouteName,
+            r.RouteDescription,
+            r.ImageUrl,
+            r.CityName,
+            r.DateCreated,
+            r.IsPrivate,
+            r.IsDeleted,
+            LikesCount = r.Likes.Count,
+            Coordinates = r.PathCoordinates.Select(c => new { c.Latitude, c.Longitude }),
+            Comments = r.Comments.Select(c => new { c.Id, c.CommentText, c.CreatedAt }),
+            Creator = new
+            {
+                r.Creator.Id,
+                r.Creator.Profile.UserName,
+                r.Creator.Profile.ProfilePicture
+            }
+        })
+        .ToListAsync();
+
+    return routes.Cast<object>().ToList();
+            
+       
+        }
         public async Task<bool> AddUserProfile(UserProfileModel profile)
         {
 
             var user = await GetUserByUserName(profile.UserName);
-             
+
             UserProfileModel newProfile = new();
 
 

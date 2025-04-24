@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 namespace LoginAPI.Models
 {
     public class GalleryPostModel
-    {
-        
-      
-
-        public string? UserName { get; set; }
+    { 
         public int Id { get; set; }
+        public string? UserName { get; set; }
         public int CreatorId { get; set; }
         public string? ImageUrl { get; set; }
         public string? Title { get; set; }
