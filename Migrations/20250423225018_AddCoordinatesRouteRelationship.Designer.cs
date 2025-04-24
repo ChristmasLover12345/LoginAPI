@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoginAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250423214421_Init")]
-    partial class Init
+    [Migration("20250423225018_AddCoordinatesRouteRelationship")]
+    partial class AddCoordinatesRouteRelationship
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,12 +80,9 @@ namespace LoginAPI.Migrations
                     b.Property<int>("RouteId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RoutesModelId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("RoutesModelId");
+                    b.HasIndex("RouteId");
 
                     b.ToTable("Coordinates");
                 });
@@ -285,9 +282,13 @@ namespace LoginAPI.Migrations
 
             modelBuilder.Entity("LoginAPI.Models.CoordinatesModel", b =>
                 {
-                    b.HasOne("LoginAPI.Models.RoutesModel", null)
+                    b.HasOne("LoginAPI.Models.RoutesModel", "Route")
                         .WithMany("PathCoordinates")
-                        .HasForeignKey("RoutesModelId");
+                        .HasForeignKey("RouteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Route");
                 });
 
             modelBuilder.Entity("LoginAPI.Models.LikesModel", b =>

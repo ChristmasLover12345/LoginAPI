@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LoginAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class AddCoordinatesRouteRelationship : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -126,17 +126,17 @@ namespace LoginAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RouteId = table.Column<int>(type: "int", nullable: false),
                     Latitude = table.Column<double>(type: "float", nullable: false),
-                    Longitude = table.Column<double>(type: "float", nullable: false),
-                    RoutesModelId = table.Column<int>(type: "int", nullable: true)
+                    Longitude = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Coordinates", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Coordinates_Routes_RoutesModelId",
-                        column: x => x.RoutesModelId,
+                        name: "FK_Coordinates_Routes_RouteId",
+                        column: x => x.RouteId,
                         principalTable: "Routes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -184,9 +184,9 @@ namespace LoginAPI.Migrations
                 column: "RoutesModelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Coordinates_RoutesModelId",
+                name: "IX_Coordinates_RouteId",
                 table: "Coordinates",
-                column: "RoutesModelId");
+                column: "RouteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Likes_CommentsModelId",

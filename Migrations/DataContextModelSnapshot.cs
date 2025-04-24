@@ -77,12 +77,9 @@ namespace LoginAPI.Migrations
                     b.Property<int>("RouteId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RoutesModelId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("RoutesModelId");
+                    b.HasIndex("RouteId");
 
                     b.ToTable("Coordinates");
                 });
@@ -282,9 +279,13 @@ namespace LoginAPI.Migrations
 
             modelBuilder.Entity("LoginAPI.Models.CoordinatesModel", b =>
                 {
-                    b.HasOne("LoginAPI.Models.RoutesModel", null)
+                    b.HasOne("LoginAPI.Models.RoutesModel", "Route")
                         .WithMany("PathCoordinates")
-                        .HasForeignKey("RoutesModelId");
+                        .HasForeignKey("RouteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Route");
                 });
 
             modelBuilder.Entity("LoginAPI.Models.LikesModel", b =>
