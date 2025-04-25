@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoginAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250425172606_Init")]
+    [Migration("20250425173603_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -98,7 +98,7 @@ namespace LoginAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CreatorId")
+                    b.Property<int?>("CreatorId")
                         .HasColumnType("int");
 
                     b.Property<string>("DateCreated")
@@ -295,9 +295,7 @@ namespace LoginAPI.Migrations
                 {
                     b.HasOne("LoginAPI.Models.UserProfileModel", "Creator")
                         .WithMany()
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreatorId");
 
                     b.Navigation("Creator");
                 });
