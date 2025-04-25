@@ -12,18 +12,17 @@ namespace LoginAPI.Models
     {
 
         public int Id { get; set; }
-
+        public int CreatorId { get; set; }
         public virtual UserProfileModel? Creator { get; set; }
-
         public string? RouteName { get; set; }
         public string? RouteDescription { get; set; }
         public string? ImageUrl { get; set; }
-
         public string? CityName { get; set; }
-
         public DateTime DateCreated { get; set; }
         public bool IsPrivate { get; set; }
         public bool IsDeleted { get; set; }
+
+
 
         public virtual List<CoordinatesModel>? PathCoordinates { get; set;}
         public virtual List<LikesModel>? Likes { get; set; }
