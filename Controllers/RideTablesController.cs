@@ -94,17 +94,17 @@ namespace LoginAPI.Controllers
 
         }
 
-        // [HttpGet("GetUserRoutes/{userId}")]
-        // public async Task<IActionResult> GetUserRoutes(int userId)
-        // {
+        [HttpGet("GetUserRoutes/{userId}")]
+        public async Task<IActionResult> GetUserRoutes(int userId)
+        {
 
-        //     var routes = await _rideTablesService.GetUserRoutes(userId);
+            var routes = await _rideTablesService.GetUserRoutes(userId);
 
-        //     if (routes != null) return Ok(routes);
+            if (routes != null) return Ok(routes);
 
-        //     return BadRequest(new { Message = "This user has no routes" });
+            return BadRequest(new { Message = "This user has no routes" });
 
-        // }
+        }
 
       
 
@@ -139,25 +139,6 @@ namespace LoginAPI.Controllers
 
         }
 
-        [HttpGet("GetLikes/{id}")]
-        public async Task<IActionResult> GetLikes(int id)
-        {
-            var likes = await _rideTablesService.GetLikes(id);
-
-            if (likes != null) return Ok(likes);
-
-            return BadRequest(new { Message = "No likes" });
-        }
-
-        [HttpGet("GetComments/{id}")]
-        public async Task<IActionResult> GetComments(int id)
-        {
-            var Comments = await _rideTablesService.GetComments(id);
-
-            if (Comments != null) return Ok(Comments);
-
-            return BadRequest(new { Message = "No comments" });
-        }
 
         [HttpPost("AddLike")]
         public async Task<IActionResult> AddLikes([FromBody] LikesModel like)

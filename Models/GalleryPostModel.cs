@@ -8,8 +8,7 @@ namespace LoginAPI.Models
     public class GalleryPostModel
     { 
         public int Id { get; set; }
-        public string? UserName { get; set; }
-        public int CreatorId { get; set; }
+        public virtual UserProfileModel Creator { get; set; }
         public string? ImageUrl { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }

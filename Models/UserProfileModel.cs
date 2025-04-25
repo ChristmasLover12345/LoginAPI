@@ -17,5 +17,8 @@ namespace LoginAPI.Models
         public string? RidingPreference { get; set; }
         public string? RideConsistency  { get; set; }
         public string? ProfilePicture { get; set; }
+
+
+        
     }
 }

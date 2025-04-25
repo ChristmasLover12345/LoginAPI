@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoginAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250424223844_Init")]
+    [Migration("20250425170232_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -116,10 +116,9 @@ namespace LoginAPI.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
 
                     b.ToTable("GalleryPosts");
                 });
@@ -175,6 +174,9 @@ namespace LoginAPI.Migrations
                     b.Property<string>("CityName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CreatorId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -194,6 +196,8 @@ namespace LoginAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
 
                     b.ToTable("Routes");
                 });
@@ -287,6 +291,17 @@ namespace LoginAPI.Migrations
                         .HasForeignKey("RoutesModelId");
                 });
 
+            modelBuilder.Entity("LoginAPI.Models.GalleryPostModel", b =>
+                {
+                    b.HasOne("LoginAPI.Models.UserProfileModel", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+                });
+
             modelBuilder.Entity("LoginAPI.Models.LikesModel", b =>
                 {
                     b.HasOne("LoginAPI.Models.CommentsModel", null)
@@ -300,6 +315,17 @@ namespace LoginAPI.Migrations
                     b.HasOne("LoginAPI.Models.RoutesModel", null)
                         .WithMany("Likes")
                         .HasForeignKey("RoutesModelId");
+                });
+
+            modelBuilder.Entity("LoginAPI.Models.RoutesModel", b =>
+                {
+                    b.HasOne("LoginAPI.Models.UserProfileModel", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
                 });
 
             modelBuilder.Entity("LoginAPI.Models.CommentsModel", b =>
