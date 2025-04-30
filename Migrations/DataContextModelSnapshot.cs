@@ -128,11 +128,17 @@ namespace LoginAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CommentId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("CommentsModelId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("GalleryPostId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("GalleryPostModelId")
                         .HasColumnType("int");
@@ -140,7 +146,7 @@ namespace LoginAPI.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("PostId")
+                    b.Property<int?>("RouteId")
                         .HasColumnType("int");
 
                     b.Property<int?>("RoutesModelId")

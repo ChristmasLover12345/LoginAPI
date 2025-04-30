@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoginAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250425214311_Init")]
+    [Migration("20250430211836_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -131,11 +131,17 @@ namespace LoginAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CommentId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("CommentsModelId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("GalleryPostId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("GalleryPostModelId")
                         .HasColumnType("int");
@@ -143,7 +149,7 @@ namespace LoginAPI.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("PostId")
+                    b.Property<int?>("RouteId")
                         .HasColumnType("int");
 
                     b.Property<int?>("RoutesModelId")
