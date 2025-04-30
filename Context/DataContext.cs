@@ -61,7 +61,5 @@ namespace LoginAPI.Context
                     .WithMany(g => g.Comments)
                     .HasForeignKey(c => c.GalleryPostId);
         }
-
-
     }
 }
