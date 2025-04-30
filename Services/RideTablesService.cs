@@ -127,12 +127,12 @@ namespace LoginAPI.Services
 
         
 
-       
+       private async Task<List<LikesModel>> GetLikesById(int Id) => await _dataContext.Likes.Where(post => post.UserId == Id && post.IsDeleted == false).ToListAsync();
 
 
-        public async Task<bool> RemoveLike(int userId, int postId)
+        public async Task<bool> RemoveLike(int userId, int TargetId)
         {
-            var like = await _dataContext.Likes.FirstOrDefaultAsync(like => like.UserId == userId && like.PostId == postId);
+            var like = await _dataContext.Likes.FirstOrDefaultAsync(like => like.UserId == userId && (like.GalleryPostId == TargetId || like.UserId == userId && like.RouteId == TargetId || like.UserId == userId && like.CommentId == TargetId));
 
             if (like == null)
             {

@@ -9,7 +9,9 @@ namespace LoginAPI.Models
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public int? PostId { get; set; }
+        public int? GalleryPostId { get; set; }
+        public int? RouteId { get; set; }
+        public int? CommentId { get; set; }
 
         public bool IsDeleted { get; set; }
         public DateTime CreatedAt { get; set; }
