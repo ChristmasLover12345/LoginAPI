@@ -35,6 +35,9 @@ namespace LoginAPI.Context
                 .HasOne(g => g.Creator)
                 .WithMany()
                 .HasForeignKey(g => g.CreatorId);
+
+            
+                
         }
 
         
