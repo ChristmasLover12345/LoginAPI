@@ -10,11 +10,13 @@ namespace LoginAPI.Models
         public int Id { get; set; }
         public virtual UserProfileModel? Creator { get; set; }
         public int CreatorId { get; set; }
+
         public string? ImageUrl { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }
         public string? DateCreated { get; set; }
         public bool IsDeleted { get; set; }
+        
         public virtual ICollection<LikesModel>? Likes { get; set; }
         public virtual ICollection<CommentsModel>? Comments { get; set; }
     }

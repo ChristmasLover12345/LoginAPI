@@ -36,10 +36,30 @@ namespace LoginAPI.Context
                 .WithMany()
                 .HasForeignKey(g => g.CreatorId);
 
-            
-                
-        }
+            modelBuilder.Entity<LikesModel>()
+                .HasOne(l => l.Route)
+                .WithMany(r => r.Likes)
+                .HasForeignKey(l => l.RouteId);
 
-        
+            modelBuilder.Entity<LikesModel>()
+                .HasOne(l => l.GalleryPost)
+                .WithMany()
+                .HasForeignKey(l => l.GalleryPostId);
+
+            modelBuilder.Entity<LikesModel>()
+                .HasOne(l => l.Comment)
+                .WithMany(c => c.Likes)
+                .HasForeignKey(l => l.CommentId);
+
+            modelBuilder.Entity<CommentsModel>()
+                 .HasOne(c => c.Route)
+            .WithMany(r => r.Comments)
+            .HasForeignKey(c => c.RouteId);
+
+            modelBuilder.Entity<CommentsModel>()
+                    .HasOne(c => c.GalleryPost)
+                    .WithMany(g => g.Comments)
+                    .HasForeignKey(c => c.GalleryPostId);
+        }
     }
 }
