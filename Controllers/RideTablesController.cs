@@ -163,6 +163,18 @@ namespace LoginAPI.Controllers
 
         }
 
+        [HttpGet("GetUserLikes/{userId}")]
+        public async Task<IActionResult> GetUserLikes(int userId)
+        {
+
+            var Likes = await _rideTablesService.GetLikesById(userId);
+
+            if (Likes != null) return Ok(Likes);
+
+            return BadRequest(new { Message = "This user has no routes" });
+
+        }
+
         [HttpPost("AddComment")]
         public async Task<IActionResult> AddComment([FromBody] CommentsModel comment)
         {

@@ -127,7 +127,7 @@ namespace LoginAPI.Services
 
         
 
-       private async Task<List<LikesModel>> GetLikesById(int Id) => await _dataContext.Likes.Where(post => post.UserId == Id && post.IsDeleted == false).ToListAsync();
+       public async Task<List<LikesModel>> GetLikesById(int Id) => await _dataContext.Likes.Where(post => post.UserId == Id && post.IsDeleted == false).ToListAsync();
 
 
         public async Task<bool> RemoveLike(int userId, int TargetId)
