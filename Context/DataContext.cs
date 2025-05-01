@@ -60,6 +60,10 @@ namespace LoginAPI.Context
                     .HasOne(c => c.GalleryPost)
                     .WithMany(g => g.Comments)
                     .HasForeignKey(c => c.GalleryPostId);
+            modelBuilder.Entity<CommentsModel>()
+                .HasOne(c => c.User)
+                .WithMany()
+                .HasForeignKey(c => c.UserId);
         }
     }
 }
