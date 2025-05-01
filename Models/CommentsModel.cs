@@ -12,11 +12,11 @@ namespace LoginAPI.Models
         public int UserId { get; set; }
 
         public int? RouteId { get; set; }
-         [JsonIgnore]
+        [JsonIgnore]
         public virtual RoutesModel? Route { get; set; }
 
         public int? GalleryPostId { get; set; }
-          [JsonIgnore]
+        [JsonIgnore]
         public virtual GalleryPostModel? GalleryPost { get; set; }
 
 
@@ -25,6 +25,9 @@ namespace LoginAPI.Models
         public bool IsDeleted { get; set; }
 
         public virtual List<LikesModel>? Likes { get; set; }
-    
+
+        [JsonIgnore]
+        public virtual UserProfileModel? User { get; set; }
+
     }
 }
