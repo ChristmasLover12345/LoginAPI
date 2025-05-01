@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoginAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250430225120_Init")]
+    [Migration("20250501031820_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -36,8 +36,8 @@ namespace LoginAPI.Migrations
                     b.Property<string>("CommentText")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CreatedAt")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("GalleryPostId")
                         .HasColumnType("int");
@@ -98,8 +98,8 @@ namespace LoginAPI.Migrations
                     b.Property<int>("CreatorId")
                         .HasColumnType("int");
 
-                    b.Property<string>("DateCreated")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");

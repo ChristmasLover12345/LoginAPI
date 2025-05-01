@@ -33,8 +33,8 @@ namespace LoginAPI.Migrations
                     b.Property<string>("CommentText")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CreatedAt")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("GalleryPostId")
                         .HasColumnType("int");
@@ -95,8 +95,8 @@ namespace LoginAPI.Migrations
                     b.Property<int>("CreatorId")
                         .HasColumnType("int");
 
-                    b.Property<string>("DateCreated")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");

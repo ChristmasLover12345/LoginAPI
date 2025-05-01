@@ -60,7 +60,7 @@ namespace LoginAPI.Migrations
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateCreated = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -110,7 +110,7 @@ namespace LoginAPI.Migrations
                     RouteId = table.Column<int>(type: "int", nullable: true),
                     GalleryPostId = table.Column<int>(type: "int", nullable: true),
                     CommentText = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
