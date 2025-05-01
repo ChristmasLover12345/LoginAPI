@@ -14,9 +14,9 @@ namespace LoginAPI.Models
         public string? ImageUrl { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }
-        public string? DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }
         public bool IsDeleted { get; set; }
-        
+
         public virtual ICollection<LikesModel>? Likes { get; set; }
         public virtual ICollection<CommentsModel>? Comments { get; set; }
     }

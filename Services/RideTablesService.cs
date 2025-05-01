@@ -29,6 +29,7 @@ namespace LoginAPI.Services
 
         public async Task<bool> AddGalleryPost(GalleryPostModel post)
         {
+            post.DateCreated = DateTime.UtcNow;
             await _dataContext.GalleryPosts.AddAsync(post);
             return await _dataContext.SaveChangesAsync() != 0;
         }
@@ -99,6 +100,7 @@ namespace LoginAPI.Services
         }
         public async Task<bool> AddComment(CommentsModel comment)
         {
+            comment.CreatedAt = DateTime.UtcNow;
             await _dataContext.Comments.AddAsync(comment);
             return await _dataContext.SaveChangesAsync() != 0;
         }
