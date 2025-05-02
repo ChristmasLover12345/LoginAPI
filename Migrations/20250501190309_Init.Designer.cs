@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoginAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250501031820_Init")]
+    [Migration("20250501190309_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -56,6 +56,8 @@ namespace LoginAPI.Migrations
                     b.HasIndex("GalleryPostId");
 
                     b.HasIndex("RouteId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Comments");
                 });
@@ -282,9 +284,17 @@ namespace LoginAPI.Migrations
                         .WithMany("Comments")
                         .HasForeignKey("RouteId");
 
+                    b.HasOne("LoginAPI.Models.UserProfileModel", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("GalleryPost");
 
                     b.Navigation("Route");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("LoginAPI.Models.CoordinatesModel", b =>

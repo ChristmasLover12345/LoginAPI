@@ -54,6 +54,8 @@ namespace LoginAPI.Migrations
 
                     b.HasIndex("RouteId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Comments");
                 });
 
@@ -279,9 +281,17 @@ namespace LoginAPI.Migrations
                         .WithMany("Comments")
                         .HasForeignKey("RouteId");
 
+                    b.HasOne("LoginAPI.Models.UserProfileModel", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("GalleryPost");
 
                     b.Navigation("Route");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("LoginAPI.Models.CoordinatesModel", b =>

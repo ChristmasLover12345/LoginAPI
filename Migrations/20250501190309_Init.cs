@@ -126,6 +126,12 @@ namespace LoginAPI.Migrations
                         column: x => x.RouteId,
                         principalTable: "Routes",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Comments_UserProfile_UserId",
+                        column: x => x.UserId,
+                        principalTable: "UserProfile",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -197,6 +203,11 @@ namespace LoginAPI.Migrations
                 name: "IX_Comments_RouteId",
                 table: "Comments",
                 column: "RouteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_UserId",
+                table: "Comments",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Coordinates_RoutesModelId",
