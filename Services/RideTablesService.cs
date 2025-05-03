@@ -25,7 +25,7 @@ namespace LoginAPI.Services
 
         public async Task<List<GalleryPostModel>> GetGalleryPosts() => await _dataContext.GalleryPosts.Include(like => like.Likes).Include(com => com.Comments).Include(dad => dad.Creator).ToListAsync();
 
-        public async Task<IEnumerable<RoutesModel>> GetRoutes() => await _dataContext.Routes.Include(cord => cord.PathCoordinates).Include(like => like.Likes).Include(com => com.Comments).Include(dad => dad.Creator).ToListAsync();
+        public async Task<IEnumerable<RoutesModel>> GetRoutes() => await _dataContext.Routes.Include(cord => cord.PathCoordinates).Include(like => like.Likes).Include(com => com.Comments).ThenInclude(comment => comment.User).Include(dad => dad.Creator).ToListAsync();
 
         public async Task<bool> AddGalleryPost(GalleryPostModel post)
         {
