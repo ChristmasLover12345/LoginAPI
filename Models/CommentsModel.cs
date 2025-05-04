@@ -26,7 +26,6 @@ namespace LoginAPI.Models
 
         public virtual List<LikesModel>? Likes { get; set; }
 
-        [JsonIgnore]
         public virtual UserProfileModel? User { get; set; }
 
     }
