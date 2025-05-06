@@ -19,6 +19,7 @@ namespace LoginAPI.Context
         public DbSet<UserProfileModel> UserProfile { get; set; }
         public DbSet<GalleryPostModel> GalleryPosts { get; set; }
         public DbSet<RoutesModel> Routes { get; set; }
+        public DbSet<RideVideosModel> RideVideos { get; set; }
         public DbSet<LikesModel> Likes { get; set; }
         public DbSet<CommentsModel> Comments { get; set; }
         public DbSet<CoordinatesModel> Coordinates { get; set; }

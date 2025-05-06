@@ -222,5 +222,31 @@ namespace LoginAPI.Services
 
         public async Task<UserProfileModel> GetProfileById(int profileId) => await _dataContext.UserProfile.FirstOrDefaultAsync(profile => profile.UserId == profileId);
 
+        public async Task<bool> AddRideVideo(RideVideosModel Video)
+        {
+            Video.CreatedAt = DateTime.UtcNow;
+            await _dataContext.RideVideos.AddAsync(Video);
+            return await _dataContext.SaveChangesAsync() != 0;
+        }
+
+        public async Task<bool> EditRideVideo(RideVideosModel Video)
+        {
+           
+            var videoToEdit = await _dataContext.RideVideos.FirstOrDefaultAsync(video => video.Id == Video.Id);
+
+            if (videoToEdit == null) return false;
+
+            videoToEdit.VideoUrl = Video.VideoUrl;
+            videoToEdit.Title = Video.Title;
+            videoToEdit.IsDeleted = Video.IsDeleted;
+
+            _dataContext.RideVideos.Update(videoToEdit);
+            return await _dataContext.SaveChangesAsync() != 0;
+        }
+
+        public async Task<List<RideVideosModel>> GetRideVideos() => await _dataContext.RideVideos.Include(like => like.Likes).Include(com => com.Comments).Include(dad => dad.Creator).ToListAsync();
+
+        public async Task<List<RideVideosModel>> GetUserRideVideos(int userId) => await _dataContext.RideVideos.Include(like => like.Likes).Include(com => com.Comments).Include(dad => dad.Creator).Where(video => video.Creator.UserId == userId).ToListAsync();
+
     }
 }

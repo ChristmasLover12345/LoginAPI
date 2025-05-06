@@ -139,6 +139,60 @@ namespace LoginAPI.Controllers
 
         }
 
+        [HttpGet("GetVideos")]
+        public async Task<IActionResult> GetAllVideos()
+        {
+
+            var videos = await _rideTablesService.GetRideVideos();
+
+            if (videos != null) return Ok(videos);
+
+            return BadRequest(new { Message = "No videos" });
+
+        }
+
+        [HttpGet("GetUserVideos/{userId}")]
+        public async Task<IActionResult> GetUserVideos(int userId)
+        {
+
+            var videos = await _rideTablesService.GetUserRideVideos(userId);
+
+            if (videos != null) return Ok(videos);
+
+            return BadRequest(new { Message = "This user has no videos" });
+
+        }
+
+        [HttpPost("AddVideo")]
+        public async Task<IActionResult> AddVideo([FromBody] RideVideosModel video)
+        {
+            var success = await _rideTablesService.AddRideVideo(video);
+
+            if (success) return Ok(new { Success = true });
+
+            return BadRequest(new { Message = "Video creation was not successful" });
+        }
+
+        [HttpPost("EditVideo")]
+        public async Task<IActionResult> EditVideo([FromBody] RideVideosModel video)
+        {
+            var success = await _rideTablesService.EditRideVideo(video);
+
+            if (success) return Ok(new { Success = true });
+
+            return BadRequest(new { Message = "No video found" });
+        }
+
+        [HttpDelete("RemoveVideo")]
+        public async Task<IActionResult> RemoveVideo([FromBody] RideVideosModel video)
+        {
+            var success = await _rideTablesService.EditRideVideo(video);
+
+            if (success) return Ok(new { Success = true });
+
+            return BadRequest(new { Message = "Video Deletion was not successful" });
+        }
+
 
         [HttpPost("AddLike")]
         public async Task<IActionResult> AddLikes([FromBody] LikesModel like)
