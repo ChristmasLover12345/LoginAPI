@@ -18,6 +18,9 @@ namespace LoginAPI.Models
         public int? GalleryPostId { get; set; }
         [JsonIgnore]
         public virtual GalleryPostModel? GalleryPost { get; set; }
+        public int? VideoId { get; set; }
+        [JsonIgnore]
+        public virtual RideVideosModel? Video { get; set; }
 
 
         public string? CommentText { get; set; }

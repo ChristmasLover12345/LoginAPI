@@ -17,6 +17,9 @@ namespace LoginAPI.Models
         public int? RouteId { get; set; }
         [JsonIgnore]
         public virtual RoutesModel? Route { get; set; }
+        public int? VideoId { get; set; }
+        [JsonIgnore]
+        public virtual RideVideosModel? Video { get; set; }
 
         public int? CommentId { get; set; }
         [JsonIgnore]

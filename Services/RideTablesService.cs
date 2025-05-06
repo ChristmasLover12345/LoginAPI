@@ -207,7 +207,7 @@ namespace LoginAPI.Services
             if (profileToEdit == null) return false;
 
             profileToEdit.BikeType = profile.BikeType;
-            profileToEdit.Id = profile.Id;
+            profileToEdit.UserId = profile.UserId;
             profileToEdit.Location = profile.Location;
             profileToEdit.Name = profile.Name;
             profileToEdit.ProfilePicture = profile.ProfilePicture;
