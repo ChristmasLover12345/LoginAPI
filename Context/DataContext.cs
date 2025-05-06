@@ -49,7 +49,7 @@ namespace LoginAPI.Context
 
             modelBuilder.Entity<LikesModel>()
                 .HasOne(l => l.GalleryPost)
-                .WithMany()
+                .WithMany(g=>g.Likes)
                 .HasForeignKey(l => l.GalleryPostId);
 
             modelBuilder.Entity<LikesModel>()
