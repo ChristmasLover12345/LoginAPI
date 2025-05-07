@@ -141,9 +141,6 @@ namespace LoginAPI.Migrations
                     b.Property<int?>("GalleryPostId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GalleryPostModelId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -161,8 +158,6 @@ namespace LoginAPI.Migrations
                     b.HasIndex("CommentId");
 
                     b.HasIndex("GalleryPostId");
-
-                    b.HasIndex("GalleryPostModelId");
 
                     b.HasIndex("RouteId");
 
@@ -365,12 +360,8 @@ namespace LoginAPI.Migrations
                         .HasForeignKey("CommentId");
 
                     b.HasOne("LoginAPI.Models.GalleryPostModel", "GalleryPost")
-                        .WithMany()
-                        .HasForeignKey("GalleryPostId");
-
-                    b.HasOne("LoginAPI.Models.GalleryPostModel", null)
                         .WithMany("Likes")
-                        .HasForeignKey("GalleryPostModelId");
+                        .HasForeignKey("GalleryPostId");
 
                     b.HasOne("LoginAPI.Models.RoutesModel", "Route")
                         .WithMany("Likes")

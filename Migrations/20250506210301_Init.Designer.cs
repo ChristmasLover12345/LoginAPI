@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoginAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250506190405_Init")]
+    [Migration("20250506210301_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -144,9 +144,6 @@ namespace LoginAPI.Migrations
                     b.Property<int?>("GalleryPostId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GalleryPostModelId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -164,8 +161,6 @@ namespace LoginAPI.Migrations
                     b.HasIndex("CommentId");
 
                     b.HasIndex("GalleryPostId");
-
-                    b.HasIndex("GalleryPostModelId");
 
                     b.HasIndex("RouteId");
 
@@ -368,12 +363,8 @@ namespace LoginAPI.Migrations
                         .HasForeignKey("CommentId");
 
                     b.HasOne("LoginAPI.Models.GalleryPostModel", "GalleryPost")
-                        .WithMany()
-                        .HasForeignKey("GalleryPostId");
-
-                    b.HasOne("LoginAPI.Models.GalleryPostModel", null)
                         .WithMany("Likes")
-                        .HasForeignKey("GalleryPostModelId");
+                        .HasForeignKey("GalleryPostId");
 
                     b.HasOne("LoginAPI.Models.RoutesModel", "Route")
                         .WithMany("Likes")

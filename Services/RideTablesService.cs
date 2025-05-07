@@ -125,16 +125,16 @@ namespace LoginAPI.Services
         }
 
         private async Task<GalleryPostModel> GetGalleryPostById(int Id) => await _dataContext.GalleryPosts.FindAsync(Id);
-       
 
-        
 
-       public async Task<List<LikesModel>> GetLikesById(int Id) => await _dataContext.Likes.Where(post => post.UserId == Id && post.IsDeleted == false).ToListAsync();
+
+
+        public async Task<List<LikesModel>> GetLikesById(int Id) => await _dataContext.Likes.Where(post => post.UserId == Id && post.IsDeleted == false).ToListAsync();
 
 
         public async Task<bool> RemoveLike(int userId, int TargetId)
         {
-            var like = await _dataContext.Likes.FirstOrDefaultAsync(like => like.UserId == userId && (like.GalleryPostId == TargetId || like.UserId == userId && like.RouteId == TargetId || like.UserId == userId && like.CommentId == TargetId));
+            var like = await _dataContext.Likes.FirstOrDefaultAsync(like => like.UserId == userId && (like.UserId == userId && like.GalleryPostId == TargetId || like.UserId == userId && like.RouteId == TargetId || like.UserId == userId && like.CommentId == TargetId));
 
             if (like == null)
             {
@@ -162,11 +162,32 @@ namespace LoginAPI.Services
             return await _dataContext.SaveChangesAsync() != 0;
         }
 
+        public async Task<List<CommentsModel>> GetCommentsByRouteId(int routeId) =>
+            await _dataContext.Comments
+                .Include(c => c.Likes)
+                .Include(c => c.User)
+                .Where(c => c.RouteId == routeId && !c.IsDeleted)
+                .ToListAsync();
+
+        public async Task<List<CommentsModel>> GetCommentsByGalleryPostId(int postId) =>
+            await _dataContext.Comments
+                .Include(c => c.Likes)
+                .Include(c => c.User)
+                .Where(c => c.GalleryPostId == postId && !c.IsDeleted)
+                .ToListAsync();
+
+        public async Task<List<CommentsModel>> GetCommentsByVideoId(int videoId) =>
+            await _dataContext.Comments
+                .Include(c => c.Likes)
+                .Include(c => c.User)
+                .Where(c => c.VideoId == videoId && !c.IsDeleted)
+                .ToListAsync();
+
         public async Task<List<GalleryPostModel>> GetUserPosts(int userId) => await _dataContext.GalleryPosts.Include(like => like.Likes).Include(com => com.Comments).Include(dad => dad.Creator).Where(post => post.Creator.UserId == userId).ToListAsync();
         private async Task<UserProfileModel> GetUserByUserName(string userName) => await _dataContext.UserProfile.FirstOrDefaultAsync(user => user.UserName == userName);
         public async Task<List<RoutesModel>> GetUserRoutes(int userId) => await _dataContext.Routes.Include(like => like.Likes).Include(com => com.Comments).Include(dad => dad.Creator).Where(route => route.Creator.UserId == userId).ToListAsync();
 
-       
+
         public async Task<bool> AddUserProfile(UserProfileModel profile)
         {
 
@@ -231,7 +252,7 @@ namespace LoginAPI.Services
 
         public async Task<bool> EditRideVideo(RideVideosModel Video)
         {
-           
+
             var videoToEdit = await _dataContext.RideVideos.FirstOrDefaultAsync(video => video.Id == Video.Id);
 
             if (videoToEdit == null) return false;

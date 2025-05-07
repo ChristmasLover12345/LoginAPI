@@ -196,8 +196,7 @@ namespace LoginAPI.Migrations
                     VideoId = table.Column<int>(type: "int", nullable: true),
                     CommentId = table.Column<int>(type: "int", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    GalleryPostModelId = table.Column<int>(type: "int", nullable: true)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -210,11 +209,6 @@ namespace LoginAPI.Migrations
                     table.ForeignKey(
                         name: "FK_Likes_GalleryPosts_GalleryPostId",
                         column: x => x.GalleryPostId,
-                        principalTable: "GalleryPosts",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Likes_GalleryPosts_GalleryPostModelId",
-                        column: x => x.GalleryPostModelId,
                         principalTable: "GalleryPosts",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -268,11 +262,6 @@ namespace LoginAPI.Migrations
                 name: "IX_Likes_GalleryPostId",
                 table: "Likes",
                 column: "GalleryPostId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Likes_GalleryPostModelId",
-                table: "Likes",
-                column: "GalleryPostModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Likes_RouteId",
