@@ -252,6 +252,45 @@ namespace LoginAPI.Controllers
 
         }
 
+        [HttpGet("GetRouteComments/{routeId}")]
+        public async Task<IActionResult> GetRouteComments(int routeId)
+        {
+
+            var comments = await _rideTablesService.GetCommentsByRouteId(routeId);
+
+            if (comments != null) return Ok(comments);
+
+            return BadRequest(new { Message = "No comments" });
+
+        }
+
+        [HttpGet("GetGalleryComments/{galleryId}")]
+        public async Task<IActionResult> GetGalleryComments(int galleryId)
+        {
+
+            var comments = await _rideTablesService.GetCommentsByGalleryPostId(galleryId);
+
+            if (comments != null) return Ok(comments);
+
+            return BadRequest(new { Message = "No comments" });
+
+
+
+        }
+
+        [HttpGet("GetVideoComments/{videoId}")]
+        public async Task<IActionResult> GetVideoComments(int videoId)
+        {
+
+            var comments = await _rideTablesService.GetCommentsByVideoId(videoId);
+
+            if (comments != null) return Ok(comments);
+
+            return BadRequest(new { Message = "No comments" });
+
+
+
+        }
 
         [HttpPost("AddUserProfile")]
         public async Task<IActionResult> AddUserProfile([FromBody] UserProfileModel profile)
