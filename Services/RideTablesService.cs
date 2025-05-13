@@ -132,20 +132,54 @@ namespace LoginAPI.Services
         public async Task<List<LikesModel>> GetLikesById(int Id) => await _dataContext.Likes.Where(post => post.UserId == Id && post.IsDeleted == false).ToListAsync();
 
 
-        public async Task<bool> RemoveLike(int userId, int TargetId)
-        {
-            var like = await _dataContext.Likes.FirstOrDefaultAsync(like => like.UserId == userId && (like.UserId == userId && like.GalleryPostId == TargetId || like.UserId == userId && like.RouteId == TargetId || like.UserId == userId && like.CommentId == TargetId));
+       public async Task<bool> RemoveGalleryPostLike(int userId, int galleryPostId)
+{
+    var like = await _dataContext.Likes.FirstOrDefaultAsync(like =>
+        like.UserId == userId && like.GalleryPostId == galleryPostId && !like.IsDeleted);
 
-            if (like == null)
-            {
-                return false;
-            }
+    if (like == null) return false;
 
-            like.IsDeleted = true;
+    like.IsDeleted = true;
+    _dataContext.Likes.Update(like);
+    return await _dataContext.SaveChangesAsync() > 0;
+}
 
-            _dataContext.Likes.Update(like);
-            return await _dataContext.SaveChangesAsync() != 0;
-        }
+    public async Task<bool> RemoveRouteLike(int userId, int routeId)
+    {
+        var like = await _dataContext.Likes.FirstOrDefaultAsync(like =>
+            like.UserId == userId && like.RouteId == routeId && !like.IsDeleted);
+
+        if (like == null) return false;
+
+        like.IsDeleted = true;
+        _dataContext.Likes.Update(like);
+        return await _dataContext.SaveChangesAsync() > 0;
+    }
+
+    public async Task<bool> RemoveVideoLike(int userId, int videoId)
+    {
+        var like = await _dataContext.Likes.FirstOrDefaultAsync(like =>
+            like.UserId == userId && like.VideoId == videoId && !like.IsDeleted);
+
+        if (like == null) return false;
+
+        like.IsDeleted = true;
+        _dataContext.Likes.Update(like);
+        return await _dataContext.SaveChangesAsync() > 0;
+    }
+
+    public async Task<bool> RemoveCommentLike(int userId, int commentId)
+    {
+        var like = await _dataContext.Likes.FirstOrDefaultAsync(like =>
+            like.UserId == userId && like.CommentId == commentId && !like.IsDeleted);
+
+        if (like == null) return false;
+
+        like.IsDeleted = true;
+        _dataContext.Likes.Update(like);
+        return await _dataContext.SaveChangesAsync() > 0;
+    }
+
 
         public async Task<bool> RemoveComment(int commentId, int userId)
         {

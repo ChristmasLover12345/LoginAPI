@@ -206,16 +206,50 @@ namespace LoginAPI.Controllers
 
         }
 
-        [HttpDelete("RemoveLike/{userId}/{postId}")]
-        public async Task<IActionResult> RemoveLike(int userId, int postId)
+        [HttpDelete("RemoveGalleryLike/{userId}/{postId}")]
+        public async Task<IActionResult> RemoveGalleryLike(int userId, int postId)
         {
-            var success = await _rideTablesService.RemoveLike(userId, postId);
+            var success = await _rideTablesService.RemoveGalleryPostLike(userId, postId);
 
             if (success) return Ok(new { Success = true });
 
             return BadRequest(new { Message = "no like to be removed was found" });
 
         }
+
+        [HttpDelete("RemoveRouteLike/{userId}/{postId}")]
+        public async Task<IActionResult> RemoveRouteLike(int userId, int postId)
+        {
+            var success = await _rideTablesService.RemoveRouteLike(userId, postId);
+
+            if (success) return Ok(new { Success = true });
+
+            return BadRequest(new { Message = "no like to be removed was found" });
+
+        }
+
+        [HttpDelete("RemoveVideoLike/{userId}/{postId}")]
+        public async Task<IActionResult> RemoveVideoLike(int userId, int postId)
+        {
+            var success = await _rideTablesService.RemoveVideoLike(userId, postId);
+
+            if (success) return Ok(new { Success = true });
+
+            return BadRequest(new { Message = "no like to be removed was found" });
+
+        }
+
+        [HttpDelete("RemoveCommentLike/{userId}/{postId}")]
+        public async Task<IActionResult> RemoveCommentLike(int userId, int postId)
+        {
+            var success = await _rideTablesService.RemoveCommentLike(userId, postId);
+
+            if (success) return Ok(new { Success = true });
+
+            return BadRequest(new { Message = "no like to be removed was found" });
+
+        }
+
 
         [HttpGet("GetUserLikes/{userId}")]
         public async Task<IActionResult> GetUserLikes(int userId)
