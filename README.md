@@ -1,1 +1,1 @@
-Login and table API for a project
+Login and table API for a Team Project
