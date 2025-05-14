@@ -82,17 +82,19 @@ namespace LoginAPI.Controllers
 
         }
 
-        [HttpGet("GetRoutes")]
-        public async Task<IActionResult> GetAllRoutes()
+        [HttpGet("GetRoutes/{userId}")]
+        public async Task<IActionResult> GetAllRoutes(int userId)
         {
+            var routes = await _rideTablesService.GetRoutes(userId);
 
-            var routes = await _rideTablesService.GetRoutes();
+            if (routes == null || !routes.Any())
+            {
+                return NotFound(new { Message = "No routes found." });
+            }
 
-            if (routes != null) return Ok(routes);
-
-            return BadRequest(new { Message = "No routes" });
-
+            return Ok(routes);
         }
+
 
         [HttpGet("GetUserRoutes/{userId}")]
         public async Task<IActionResult> GetUserRoutes(int userId)
@@ -106,7 +108,7 @@ namespace LoginAPI.Controllers
 
         }
 
-      
+
 
         [HttpPost("AddRoute")]
         public async Task<IActionResult> AddRoute([FromBody] RoutesModel route)

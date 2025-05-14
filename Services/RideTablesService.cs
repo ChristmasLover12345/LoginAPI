@@ -26,7 +26,7 @@ namespace LoginAPI.Services
 
         public async Task<List<GalleryPostModel>> GetGalleryPosts() => await _dataContext.GalleryPosts.Include(like => like.Likes).Include(com => com.Comments).ThenInclude(c => c.User).Include(dad => dad.Creator).ToListAsync();
 
-public async Task<IEnumerable<GetRoutesDTO>> GetRoutes(int page = 1, int pageSize = 4)
+public async Task<IEnumerable<GetRoutesDTO>> GetRoutes(int currentUserId,int page = 1, int pageSize = 4 )
 {
     return await _dataContext.Routes
         .Where(r => !r.IsDeleted)
@@ -42,12 +42,14 @@ public async Task<IEnumerable<GetRoutesDTO>> GetRoutes(int page = 1, int pageSiz
             ProfilePicture = r.Creator.ProfilePicture,
             DateCreated = r.DateCreated,
             RouteDescription = r.RouteDescription,
-            LikeCount = r.Likes.Count(l => !l.IsDeleted), 
             PathCoordinates = r.PathCoordinates.Select(coord => new CoordinateDTO
             {
                 Latitude = coord.Latitude,
                 Longitude = coord.Longitude
-            }).ToList()
+            }).ToList(),
+            LikeCount = r.Likes.Count(l => !l.IsDeleted),
+            CommentCount = r.Comments.Count(c => !c.IsDeleted),
+            IsLikedByCurrentUser = r.Likes.Any(l => l.UserId == currentUserId && !l.IsDeleted)
         })
         .ToListAsync();
 }
