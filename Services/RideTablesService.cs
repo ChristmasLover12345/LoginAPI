@@ -42,6 +42,7 @@ public async Task<IEnumerable<GetRoutesDTO>> GetRoutes(int page = 1, int pageSiz
             ProfilePicture = r.Creator.ProfilePicture,
             DateCreated = r.DateCreated,
             RouteDescription = r.RouteDescription,
+            LikeCount = r.Likes.Count(l => !l.IsDeleted), 
             PathCoordinates = r.PathCoordinates.Select(coord => new CoordinateDTO
             {
                 Latitude = coord.Latitude,
@@ -50,6 +51,7 @@ public async Task<IEnumerable<GetRoutesDTO>> GetRoutes(int page = 1, int pageSiz
         })
         .ToListAsync();
 }
+
 
 
 

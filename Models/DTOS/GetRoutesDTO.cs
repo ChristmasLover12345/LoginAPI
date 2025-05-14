@@ -15,6 +15,7 @@ namespace LoginAPI.Models.DTOS
     public DateTime DateCreated { get; set; }
     public string? RouteDescription { get; set; }
     public List<CoordinateDTO> PathCoordinates { get; set; } = new();
+     public int LikeCount { get; set; }
 }
 
 public class CoordinateDTO
