@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LoginAPI.Context;
 using LoginAPI.Models;
+using LoginAPI.Models.DTOS;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -25,7 +26,33 @@ namespace LoginAPI.Services
 
         public async Task<List<GalleryPostModel>> GetGalleryPosts() => await _dataContext.GalleryPosts.Include(like => like.Likes).Include(com => com.Comments).ThenInclude(c => c.User).Include(dad => dad.Creator).ToListAsync();
 
-        public async Task<IEnumerable<RoutesModel>> GetRoutes() => await _dataContext.Routes.Include(cord => cord.PathCoordinates).Include(like => like.Likes).Include(com => com.Comments).ThenInclude(comment => comment.User).Include(dad => dad.Creator).ToListAsync();
+public async Task<IEnumerable<GetRoutesDTO>> GetRoutes(int page = 1, int pageSize = 4)
+{
+    return await _dataContext.Routes
+        .Where(r => !r.IsDeleted)
+        .OrderByDescending(r => r.DateCreated)
+        .Skip((page - 1) * pageSize)
+        .Take(pageSize)
+        .Select(r => new GetRoutesDTO
+        {
+            Id = r.Id,
+            Title = r.RouteName,
+            IsPrivate = r.IsPrivate,
+            CreatorName = r.Creator.UserName,
+            ProfilePicture = r.Creator.ProfilePicture,
+            DateCreated = r.DateCreated,
+            RouteDescription = r.RouteDescription,
+            PathCoordinates = r.PathCoordinates.Select(coord => new CoordinateDTO
+            {
+                Latitude = coord.Latitude,
+                Longitude = coord.Longitude
+            }).ToList()
+        })
+        .ToListAsync();
+}
+
+
+
 
         public async Task<bool> AddGalleryPost(GalleryPostModel post)
         {
@@ -132,53 +159,53 @@ namespace LoginAPI.Services
         public async Task<List<LikesModel>> GetLikesById(int Id) => await _dataContext.Likes.Where(post => post.UserId == Id && post.IsDeleted == false).ToListAsync();
 
 
-       public async Task<bool> RemoveGalleryPostLike(int userId, int galleryPostId)
-{
-    var like = await _dataContext.Likes.FirstOrDefaultAsync(like =>
-        like.UserId == userId && like.GalleryPostId == galleryPostId && !like.IsDeleted);
+        public async Task<bool> RemoveGalleryPostLike(int userId, int galleryPostId)
+        {
+            var like = await _dataContext.Likes.FirstOrDefaultAsync(like =>
+                like.UserId == userId && like.GalleryPostId == galleryPostId && !like.IsDeleted);
 
-    if (like == null) return false;
+            if (like == null) return false;
 
-    like.IsDeleted = true;
-    _dataContext.Likes.Update(like);
-    return await _dataContext.SaveChangesAsync() > 0;
-}
+            like.IsDeleted = true;
+            _dataContext.Likes.Update(like);
+            return await _dataContext.SaveChangesAsync() > 0;
+        }
 
-    public async Task<bool> RemoveRouteLike(int userId, int routeId)
-    {
-        var like = await _dataContext.Likes.FirstOrDefaultAsync(like =>
-            like.UserId == userId && like.RouteId == routeId && !like.IsDeleted);
+        public async Task<bool> RemoveRouteLike(int userId, int routeId)
+        {
+            var like = await _dataContext.Likes.FirstOrDefaultAsync(like =>
+                like.UserId == userId && like.RouteId == routeId && !like.IsDeleted);
 
-        if (like == null) return false;
+            if (like == null) return false;
 
-        like.IsDeleted = true;
-        _dataContext.Likes.Update(like);
-        return await _dataContext.SaveChangesAsync() > 0;
-    }
+            like.IsDeleted = true;
+            _dataContext.Likes.Update(like);
+            return await _dataContext.SaveChangesAsync() > 0;
+        }
 
-    public async Task<bool> RemoveVideoLike(int userId, int videoId)
-    {
-        var like = await _dataContext.Likes.FirstOrDefaultAsync(like =>
-            like.UserId == userId && like.VideoId == videoId && !like.IsDeleted);
+        public async Task<bool> RemoveVideoLike(int userId, int videoId)
+        {
+            var like = await _dataContext.Likes.FirstOrDefaultAsync(like =>
+                like.UserId == userId && like.VideoId == videoId && !like.IsDeleted);
 
-        if (like == null) return false;
+            if (like == null) return false;
 
-        like.IsDeleted = true;
-        _dataContext.Likes.Update(like);
-        return await _dataContext.SaveChangesAsync() > 0;
-    }
+            like.IsDeleted = true;
+            _dataContext.Likes.Update(like);
+            return await _dataContext.SaveChangesAsync() > 0;
+        }
 
-    public async Task<bool> RemoveCommentLike(int userId, int commentId)
-    {
-        var like = await _dataContext.Likes.FirstOrDefaultAsync(like =>
-            like.UserId == userId && like.CommentId == commentId && !like.IsDeleted);
+        public async Task<bool> RemoveCommentLike(int userId, int commentId)
+        {
+            var like = await _dataContext.Likes.FirstOrDefaultAsync(like =>
+                like.UserId == userId && like.CommentId == commentId && !like.IsDeleted);
 
-        if (like == null) return false;
+            if (like == null) return false;
 
-        like.IsDeleted = true;
-        _dataContext.Likes.Update(like);
-        return await _dataContext.SaveChangesAsync() > 0;
-    }
+            like.IsDeleted = true;
+            _dataContext.Likes.Update(like);
+            return await _dataContext.SaveChangesAsync() > 0;
+        }
 
 
         public async Task<bool> RemoveComment(int commentId, int userId)
