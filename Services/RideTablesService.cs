@@ -232,26 +232,49 @@ namespace LoginAPI.Services
             return await _dataContext.SaveChangesAsync() != 0;
         }
 
-        public async Task<List<CommentsModel>> GetCommentsByRouteId(int routeId) =>
-            await _dataContext.Comments
-                .Include(c => c.Likes)
-                .Include(c => c.User)
-                .Where(c => c.RouteId == routeId && !c.IsDeleted)
-                .ToListAsync();
+        public async Task<List<GetCommentsDTO>> GetCommentsByRouteId(int routeId) => await _dataContext.Comments
+        .Include(c => c.User)
+        .Where(c => c.RouteId == routeId && !c.IsDeleted)
+        .Select(c => new GetCommentsDTO
+        {
+            CommentText = c.CommentText,
+            Username = c.User.UserName,
+            ProfilePictureUrl = c.User.ProfilePicture,
+            DateCreated = c.CreatedAt
+        })
+        .ToListAsync();
 
-        public async Task<List<CommentsModel>> GetCommentsByGalleryPostId(int postId) =>
-            await _dataContext.Comments
-                .Include(c => c.Likes)
-                .Include(c => c.User)
-                .Where(c => c.GalleryPostId == postId && !c.IsDeleted)
-                .ToListAsync();
 
-        public async Task<List<CommentsModel>> GetCommentsByVideoId(int videoId) =>
+
+
+
+
+
+        public async Task<List<GetCommentsDTO>> GetCommentsByGalleryPostId(int postId) =>
             await _dataContext.Comments
-                .Include(c => c.Likes)
-                .Include(c => c.User)
-                .Where(c => c.VideoId == videoId && !c.IsDeleted)
-                .ToListAsync();
+        .Include(c => c.User)
+        .Where(c => c.GalleryPostId == postId && !c.IsDeleted)
+        .Select(c => new GetCommentsDTO
+        {
+            CommentText = c.CommentText,
+            Username = c.User.UserName,
+            ProfilePictureUrl = c.User.ProfilePicture,
+            DateCreated = c.CreatedAt
+        })
+        .ToListAsync();
+
+        public async Task<List<GetCommentsDTO>> GetCommentsByVideoId(int videoId) =>
+           await _dataContext.Comments
+        .Include(c => c.User)
+        .Where(c => c.VideoId == videoId && !c.IsDeleted)
+        .Select(c => new GetCommentsDTO
+        {
+            CommentText = c.CommentText,
+            Username = c.User.UserName,
+            ProfilePictureUrl = c.User.ProfilePicture,
+            DateCreated = c.CreatedAt
+        })
+        .ToListAsync();
 
         public async Task<List<GalleryPostModel>> GetUserPosts(int userId) => await _dataContext.GalleryPosts.Include(like => like.Likes).Include(com => com.Comments).Include(dad => dad.Creator).Where(post => post.Creator.UserId == userId).ToListAsync();
         private async Task<UserProfileModel> GetUserByUserName(string userName) => await _dataContext.UserProfile.FirstOrDefaultAsync(user => user.UserName == userName);
