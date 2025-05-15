@@ -26,33 +26,38 @@ namespace LoginAPI.Services
 
         public async Task<List<GalleryPostModel>> GetGalleryPosts() => await _dataContext.GalleryPosts.Include(like => like.Likes).Include(com => com.Comments).ThenInclude(c => c.User).Include(dad => dad.Creator).ToListAsync();
 
-public async Task<IEnumerable<GetRoutesDTO>> GetRoutes(int currentUserId,int page = 1, int pageSize = 4 )
-{
-    return await _dataContext.Routes
-        .Where(r => !r.IsDeleted)
-        .OrderByDescending(r => r.DateCreated)
-        .Skip((page - 1) * pageSize)
-        .Take(pageSize)
-        .Select(r => new GetRoutesDTO
+        public async Task<IEnumerable<GetRoutesDTO>> GetRoutes(int? currentUserId = null, int page = 1, int pageSize = 4)
         {
-            Id = r.Id,
-            Title = r.RouteName,
-            IsPrivate = r.IsPrivate,
-            CreatorName = r.Creator.UserName,
-            ProfilePicture = r.Creator.ProfilePicture,
-            DateCreated = r.DateCreated,
-            RouteDescription = r.RouteDescription,
-            PathCoordinates = r.PathCoordinates.Select(coord => new CoordinateDTO
-            {
-                Latitude = coord.Latitude,
-                Longitude = coord.Longitude
-            }).ToList(),
-            LikeCount = r.Likes.Count(l => !l.IsDeleted),
-            CommentCount = r.Comments.Count(c => !c.IsDeleted),
-            IsLikedByCurrentUser = r.Likes.Any(l => l.UserId == currentUserId && !l.IsDeleted)
-        })
-        .ToListAsync();
-}
+            return await _dataContext.Routes
+                .Where(r => !r.IsDeleted)
+                .OrderByDescending(r => r.DateCreated)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(r => new GetRoutesDTO
+                {
+                    Id = r.Id,
+                    Title = r.RouteName,
+                    IsPrivate = r.IsPrivate,
+                    CreatorName = r.Creator.UserName,
+                    ProfilePicture = r.Creator.ProfilePicture,
+                    DateCreated = r.DateCreated,
+                    RouteDescription = r.RouteDescription,
+                    PathCoordinates = r.PathCoordinates.Select(coord => new CoordinateDTO
+                    {
+                        Latitude = coord.Latitude,
+                        Longitude = coord.Longitude
+                    }).ToList(),
+                    LikeCount = r.Likes.Count(l => !l.IsDeleted),
+                    CommentCount = r.Comments.Count(c => !c.IsDeleted),
+
+                    // Updated logic to treat userId == 0 as guest
+                    IsLikedByCurrentUser = currentUserId.HasValue && currentUserId != 0
+                        ? r.Likes.Any(l => l.UserId == currentUserId && !l.IsDeleted)
+                        : false
+                })
+                .ToListAsync();
+        }
+
 
 
 

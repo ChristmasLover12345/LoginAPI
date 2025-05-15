@@ -19,7 +19,7 @@ namespace LoginAPI.Models.DTOS
     public int LikeCount { get; set; }
     public int CommentCount { get; set; }
 
-    public bool IsLikedByCurrentUser { get; set; } // ✅ Just this
+    public bool IsLikedByCurrentUser { get; set; }
 }
 
     public class CoordinateDTO

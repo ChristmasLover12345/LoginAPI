@@ -82,8 +82,8 @@ namespace LoginAPI.Controllers
 
         }
 
-        [HttpGet("GetRoutes/{userId}")]
-        public async Task<IActionResult> GetAllRoutes(int userId)
+        [HttpGet("GetRoutes/{userId?}")]
+        public async Task<IActionResult> GetAllRoutes(int? userId = null)
         {
             var routes = await _rideTablesService.GetRoutes(userId);
 
