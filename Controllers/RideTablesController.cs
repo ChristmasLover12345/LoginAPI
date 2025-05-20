@@ -24,18 +24,23 @@ namespace LoginAPI.Controllers
         {
             _rideTablesService = rideTablesService;
         }
+    
+    // Added Pagination and userId filter
 
-        [HttpGet("GetGallery")]
-        public async Task<IActionResult> GetAllGalleryPosts()
+        [HttpGet("GetGallery/{userId?}")]
+        public async Task<IActionResult> GetAllGalleryPosts(int? userId = null, int page = 1, int pageSize = 4)
         {
+            var posts = await _rideTablesService.GetGalleryPosts(userId, page, pageSize);
 
-            var posts = await _rideTablesService.GetGalleryPosts();
+            if (posts == null || !posts.Any())
+            {
+                return NotFound(new { Message = "No posts found." });
+            }
 
-            if (posts != null) return Ok(posts);
-
-            return BadRequest(new { Message = "The gallery is empty.." });
-
+            return Ok(posts);
         }
+    
+
 
         [HttpGet("GetUserPosts/{userId}")]
         public async Task<IActionResult> GetUserPosts(int userId)
@@ -81,11 +86,12 @@ namespace LoginAPI.Controllers
             return BadRequest(new { Message = "no post to be removed was found" });
 
         }
+           // Added Pagination and userId filter
 
         [HttpGet("GetRoutes/{userId?}")]
-        public async Task<IActionResult> GetAllRoutes(int? userId = null)
+        public async Task<IActionResult> GetAllRoutes(int? userId = null, int page = 1, int pageSize = 4)
         {
-            var routes = await _rideTablesService.GetRoutes(userId);
+            var routes = await _rideTablesService.GetRoutes(userId,page, pageSize);
 
             if (routes == null || !routes.Any())
             {
@@ -141,11 +147,11 @@ namespace LoginAPI.Controllers
 
         }
 
-        [HttpGet("GetVideos")]
-        public async Task<IActionResult> GetAllVideos()
+        [HttpGet("GetVideos/{userId}")]
+        public async Task<IActionResult> GetAllVideos(int userId, int page = 1, int pageSize = 4)
         {
 
-            var videos = await _rideTablesService.GetRideVideos();
+            var videos = await _rideTablesService.GetRideVideos(userId,page, pageSize);
 
             if (videos != null) return Ok(videos);
 
