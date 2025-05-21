@@ -54,7 +54,7 @@ namespace LoginAPI.Controllers
 
         }
 
-        [HttpPost("EditPost")]
+        [HttpPut("EditPost")]
         public async Task<IActionResult> EditGalleryPost([FromBody] GalleryPostModel post)
         {
             var success = await _rideTablesService.EditGalleryPost(post);
@@ -181,7 +181,7 @@ namespace LoginAPI.Controllers
             return BadRequest(new { Message = "Video creation was not successful" });
         }
 
-        [HttpPost("EditVideo")]
+        [HttpPut("EditVideo")]
         public async Task<IActionResult> EditVideo([FromBody] RideVideosModel video)
         {
             var success = await _rideTablesService.EditRideVideo(video);
@@ -344,7 +344,7 @@ namespace LoginAPI.Controllers
             return BadRequest(new { Message = "Profile creation was not successful" });
         }
 
-        [HttpPost("EditProfile")]
+        [HttpPut("EditProfile")]
         public async Task<IActionResult> EditUserProfile([FromBody] UserProfileModel profile)
         {
             var success = await _rideTablesService.EditUserProfile(profile);
