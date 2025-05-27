@@ -25,28 +25,28 @@ namespace LoginAPI.Services
 
 
        public async Task<IEnumerable<GetGalleryDTO>> GetGalleryPosts(int? currentUserId = null, int page = 1, int pageSize = 6)
-{
-    return await _dataContext.GalleryPosts
-        .Where(p => !p.IsDeleted)
-        .OrderByDescending(p => p.DateCreated)
-        .Skip((page - 1) * pageSize)
-        .Take(pageSize)
-        .Select(p => new GetGalleryDTO
         {
-            Id = p.Id,
-            ImageUrl = p.ImageUrl,
-            Caption = p.Title,
-            CreatorName = p.Creator.UserName,
-            ProfilePicture = p.Creator.ProfilePicture,
-            DateCreated = p.DateCreated,
-            LikeCount = p.Likes.Count(l => !l.IsDeleted),
-            CommentCount = p.Comments.Count(c => !c.IsDeleted),
-            IsLikedByCurrentUser = currentUserId.HasValue && currentUserId != 0
-                ? p.Likes.Any(l => l.UserId == currentUserId && !l.IsDeleted)
-                : false
-        })
-        .ToListAsync();
-}
+            return await _dataContext.GalleryPosts
+                .Where(p => !p.IsDeleted)
+                .OrderByDescending(p => p.DateCreated)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(p => new GetGalleryDTO
+                {
+                    Id = p.Id,
+                    ImageUrl = p.ImageUrl,
+                    Caption = p.Title,
+                    CreatorName = p.Creator.UserName,
+                    ProfilePicture = p.Creator.ProfilePicture,
+                    DateCreated = p.DateCreated,
+                    LikeCount = p.Likes.Count(l => !l.IsDeleted),
+                    CommentCount = p.Comments.Count(c => !c.IsDeleted),
+                    IsLikedByCurrentUser = currentUserId.HasValue && currentUserId != 0
+                        ? p.Likes.Any(l => l.UserId == currentUserId && !l.IsDeleted)
+                        : false
+                })
+                .ToListAsync();
+        }
 
 
         public async Task<IEnumerable<GetRoutesDTO>> GetRoutes(int? currentUserId = null, int page = 1, int pageSize = 4)
