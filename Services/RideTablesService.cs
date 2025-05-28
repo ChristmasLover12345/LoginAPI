@@ -303,6 +303,8 @@ namespace LoginAPI.Services
         private async Task<UserProfileModel> GetUserByUserName(string userName) => await _dataContext.UserProfile.FirstOrDefaultAsync(user => user.UserName == userName);
         public async Task<List<RoutesModel>> GetUserRoutes(int userId) => await _dataContext.Routes.Include(like => like.Likes).Include(com => com.Comments).Include(dad => dad.Creator).Where(route => route.Creator.UserId == userId).ToListAsync();
 
+        public async Task<List<CoordinatesModel>> GetRouteCoordinates(int routeId) => await _dataContext.Coordinates.Where(coord => coord.RouteId == routeId).ToListAsync();
+
 
         public async Task<bool> AddUserProfile(UserProfileModel profile)
         {

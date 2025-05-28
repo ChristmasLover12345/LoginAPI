@@ -114,6 +114,17 @@ namespace LoginAPI.Controllers
 
         }
 
+        [HttpGet("GetRouteCoordinates/{routeId}")]
+        public async Task<IActionResult> GetRouteCoordinates(int routeId)
+        {
+            var coordinates = await _rideTablesService.GetRouteCoordinates(routeId);
+
+            if (coordinates != null) return Ok(coordinates);
+
+            return BadRequest(new { Message = "No coordinates found for this route" });
+
+        }
+
 
 
         [HttpPost("AddRoute")]
