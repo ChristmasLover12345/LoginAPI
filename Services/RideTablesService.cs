@@ -305,7 +305,6 @@ namespace LoginAPI.Services
 
         public async Task<List<CoordinatesModel>> GetRouteCoordinates(int routeId) => await _dataContext.Coordinates.Where(coord => coord.RouteId == routeId).ToListAsync();
 
-
         public async Task<bool> AddUserProfile(UserProfileModel profile)
         {
 

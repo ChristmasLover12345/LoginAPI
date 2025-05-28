@@ -108,7 +108,7 @@ namespace LoginAPI.Controllers
 
             var routes = await _rideTablesService.GetUserRoutes(userId);
 
-            if (routes != null) return Ok(routes);
+            if (routes != null)  return Ok(routes);
 
             return BadRequest(new { Message = "This user has no routes" });
 
@@ -119,7 +119,7 @@ namespace LoginAPI.Controllers
         {
             var coordinates = await _rideTablesService.GetRouteCoordinates(routeId);
 
-            if (coordinates != null) return Ok(coordinates);
+            if (coordinates != null && coordinates.Any()) return Ok(coordinates);
 
             return BadRequest(new { Message = "No coordinates found for this route" });
 
